@@ -88,6 +88,59 @@ const steps = h('pre', {style: {color: '#AFEEEE' }}, `
       ))))))))) 
 ` );  
 
+const dice = h('pre', {style: {color: '#AFEEEE' }}, `
+function updateNums(e) {
+  let v = e.target.value;
+  mM3.bnd(push,mM1,v).bnd(() => mM1.x[v] = "");
+  mM5.bnd(update)
+      .bnd(() => {mMI1.block()
+      .bnd(() => mM3
+      .bnd(toFloat)
+      .bnd(() => mM1
+      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
+      .bnd(clean)
+      .bnd(displayOff, mM1.x.length)
+      .bnd(() => mM3
+      .ret([])
+      .bnd(() => mM4
+      .ret(0).bnd(mM8.ret)
+      .bnd(() => mM5.ret('Done')
+      .bnd(update)   )) )) } )
+  mM5.ret('Waiting')     
+  .bnd(update)
+  .bnd(() => {if (mM8.x != 0 && mM3.x.length == 2) {
+                     mMI1.release();
+                 }
+             } 
+  )
+}
+
+function updateOp(e) {
+  mM8.ret(e.target.textContent)
+  .bnd(update)
+  .bnd(() => {mMI2.block()
+      .bnd(() => mM3
+      .bnd(toFloat)
+      .bnd(() => mM1
+      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
+      .bnd(clean)
+      .bnd(displayOff, mM1.x.length)
+      .bnd(() => mM3
+      .ret([])
+      .bnd(() => mM4
+      .ret(0).bnd(mM8.ret)
+      .bnd(() => mM5.ret('Done')
+      .bnd(update)   )) )) } )
+  mM5.ret('Waiting')
+  .bnd(update)
+  .bnd(() => {if (mM3.x.length == 2) {
+                     mMI2.release();
+                 }
+             } 
+  )
+}
+` );  
+
 const next = h('div', {style: {fontSize: '28px', color: 'FFFF00'}}, 'mMI2.release()'  );
 /*
 const stepsF = () =>  mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
@@ -105,7 +158,7 @@ const stepsF = () =>  mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
 */
            
 
-export default {monad, monadIter, steps, next};
+export default {monad, monadIter, steps, next, dice};
 
 
 

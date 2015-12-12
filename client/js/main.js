@@ -96,8 +96,15 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
 
       h('p', 'Now click ROLL. '  ),
       h('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. ',  ),
-      h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The simulate the roll of twosix-sided, one twelve-sided, and one twenty-sided die. '  ),
-      h('p', 'I will show the code tomorrow.'  ),
+      h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. They are integral to the "Game of Score" application, in which players gain points by making the number "20". '  ),
+      h('p', 'Here are the click handlers, one for all four numbers and one for the five operators: '  ),
+      cow.dice,
+      h('p', 'When numbers are clicked, they get pushed into mM3.x, an initially empty array. When an operator is clicked, it replaces "0" as the value of mM8. So when mM3.x.length === 2 and mM8.x !== 0, it is time for the computation to go forward. '  ),
+      h('p', 'The "if" block could have contained the code to be executed. It could have contained a call to a function containing the code. "block" and "release" are not essential here, but this is an opportunity to demonstrate them. I like block and release because they make it very easy (for someone familiar with the monads) to understand the code. At first glance, you see the block. Your eyes scan down to the release. Right away you see when halted code will execute. Then look back up and see what it does. ' ),
+      h('p', 'My first "Game of Score" application ran on a Node.js server. The algorithm for the successive computations was a convoluted mess of callbacks between modules. Later, I re-made the application using a modified Haskell Wai-Websockets server with React in the browser. That was less of a mess, but there were plenty of calls to "React.setState" and the code wasn\'t real easy to understand. Here, instead of multiple function calls, I have two consise monad chains. '  ),
+      h('p', 'The next monad constructor might be a "maybe" monad that quickly propagates failure down the chain, instructing each link along the way not to do anything except return the failure message. '   ),
+      h('p', 'There are convenient ways to avoid interference between routines. The simple monads don\'t have to be named, so a chain can start with "new Monad". For example, "new Monad(3)).bnd(cube) results in an anonymous monad with value "27". Name spaces can be used for MonadIterator. My name is David Schalk, so in a team project I could let it be known that I claim the exlusive right to create monad references prefixed by "DS". '  ),
+      h('p', 'Another idea is a monad that locks when it is being used. They could be similar to Haskell MVars and serve as a foundation on which to build a means to assure that transactions are atomic; that is, that they execute completely or not at all. '  ),
       h('div', {style: {height: '300px'}} ),
         ] ), 
       h ('div',{style: { width: '30%', position: 'fixed', top: '40px', right: '15px', color: '#CCFDDA'}},
@@ -192,26 +199,32 @@ function update0() {
 function updateNums(e) {
   let v = e.target.value;
   mM3.bnd(push,mM1,v).bnd(() => mM1.x[v] = "");
-  mM5.bnd(update);
-
-  if (mM8.x != 0 && mM3.x.length == 2)  {
-    mM3.bnd(toFloat).bnd(() => mM1
-    .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
-    .bnd(clean)
-    .bnd(displayOff, mM1.x.length)
-    .bnd(() => mM3
-    .ret([])
-    .bnd(() => mM4
-    .ret(0).bnd(mM8.ret)
-    .bnd(update)   ))
-    return;
-  }
+  mM5.bnd(update)
+      .bnd(() => {mMI1.block()
+      .bnd(() => mM3
+      .bnd(toFloat)
+      .bnd(() => mM1
+      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
+      .bnd(clean)
+      .bnd(displayOff, mM1.x.length)
+      .bnd(() => mM3
+      .ret([])
+      .bnd(() => mM4
+      .ret(0).bnd(mM8.ret)
+      .bnd(() => mM5.ret('Done')
+      .bnd(update)   )) )) } )
+  mM5.ret('Waiting')     
+  .bnd(update)
+  .bnd(() => {if (mM8.x != 0 && mM3.x.length == 2)  { mMI1.release() }} )
 }
 
 function updateOp(e) {
-  mM8.ret( e.target.textContent );
-  if (mM3.x.length == 2)  {
-    mM3.bnd(toFloat).bnd(() => mM1
+  mM8.ret(e.target.textContent)
+  .bnd(update)
+  .bnd(() => {mMI2.block()
+    .bnd(() => mM3
+    .bnd(toFloat)
+    .bnd(() => mM1
     .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
     .bnd(clean)
     .bnd(displayOff, mM1.x.length)
@@ -219,10 +232,11 @@ function updateOp(e) {
     .ret([])
     .bnd(() => mM4
     .ret(0).bnd(mM8.ret)
-    .bnd(update)   ))
-    return;
-  }
-  oldVnode = patch(oldVnode, newVnode());
+    .bnd(() => mM5.ret('Done')
+    .bnd(update)   )) )) } )
+  mM5.ret('Waiting')
+  .bnd(update)
+  .bnd(() => {if (mM3.x.length == 2)  { mMI2.release() }} )
 }
 
 function updateLogin(e) {
