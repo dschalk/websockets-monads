@@ -62,19 +62,27 @@ const monadIter = h('pre', {style: {color: '#AFEEEE' }}, `    class MonadIter {
     };
 ` );  
 
-
-
 const steps = h('pre', {style: {color: '#AFEEEE' }}, `
     mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
-     .bnd(() => mM1.ret('Click the mMI2.release() button to proceed')
+     .bnd(() => mM1
+     .ret('Click mMI2.release() to proceed')
      .bnd(refresh)
-     .bnd(() => mMI2.block()
-     .bnd(() => mM2.ret('Click it again.').bnd(refresh)
-     .bnd(() => mMI2.block()
-     .bnd(() => mM3.ret('Keep going').bnd(refresh)
-     .bnd(() => mMI2.block()
-     .bnd(() => mM4.ret('One more').bnd(refresh)
-     .bnd(() => mMI2.block()
+     .bnd(() => mMI2
+         .block()
+     .bnd(() => mM2
+     .ret('Click it again.')
+     .bnd(refresh)
+     .bnd(() => mMI2
+         .block()
+     .bnd(() => mM3.ret('Keep going')
+     .bnd(refresh)
+     .bnd(() => mMI2
+         .block()
+     .bnd(() => mM4
+     .ret('One more')
+     .bnd(refresh)
+     .bnd(() => mMI2
+         .block()
      .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
      .bnd(mM4.ret).bnd(refresh)
       ))))))))) 

@@ -1,0 +1,605 @@
+
+var LoginName;
+var xyz = 0;
+var numsA = [];
+var numsB = [];
+var numsC = [];
+var CYC = 444444;
+var mM1A = mM1.x;
+
+
+
+      h('p', 'Next, we will start down the left branch of a tree and halt until the right branch finishes fetching an array of four random numbers. When two numbers and an operator have been selected from the array, at which time it will fetch the solution from the server, halt, and release the right branch to fetch the result of the second computation. When the result comes in, the left branch will be rel  '  ),
+      h('p', 'In order to create a unique socket, please enter some name.'  ),
+      h('input', {style: inputStyle1, on: {keydown: updateLogin} } ),
+      h('button', {on: { mouseenter: update8e, mouseleave: update8l, click: updateNums }, style: style8},
+            mM1.x[0]   ),
+      h('button', {on: { mouseenter: update9e, mouseleave: update9l, click: updateNums }, style: style9},
+            mM1.x[1]   ),
+      h('button', {on: { mouseenter: update10e, mouseleave: update10l, click: updateNums }, style: style10},
+            mM1.x[2]   ),
+      h('button', {on: { mouseenter: update11e, mouseleave: update11l, click: updateNums }, style: style11},
+            mM1.x[3]   ),
+      h('p', ' ',  ),
+      h('button', {on: { mouseenter: update12e, mouseleave: update12l, click: updateNext }, style: style12},
+            mM2.x[0]   ),
+      h('button', {on: { mouseenter: update13e, mouseleave: update13l, click: updateNext }, style: style13},
+            mM2.x[1]   ),
+      h('button', {on: { mouseenter: update14e, mouseleave: update14l, click: updateNext }, style: style14},
+            mM2.x[2]   ),
+      h('button', {on: { mouseenter: update15e, mouseleave: update15l, click: updateNext }, style: style15},
+            mM2.x[3]   ),
+      h('button', {on: { mouseenter: update16e, mouseleave: update16l, click: updateNext }, style: style16},
+            mM2.x[4]   ),
+      h('p', ' ',  ),
+      h('button', {on: { mouseenter: update17e, mouseleave: update17l, click: updateNext }, style: style17},
+            mM3.x[0]   ),
+      h('button', {on: { mouseenter: update18e, mouseleave: update18l, click: updateNext }, style: style18},
+            mM3.x[1]   ),
+      h('button', {on: { mouseenter: update19e, mouseleave: update19l, click: updateNext }, style: style19},
+            mM3.x[2]   ),
+      h('p', ' ',  ),
+
+
+function update0() {
+  xyz += 1;
+  mM8.ret(xyz);
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function updateNums(event) {
+  let temp = 'voc'; //mM1.x[j];
+  if (CYC = 1) {
+    console.log('temp: ', temp);
+    numsA.push(temp);
+  }
+  console.log('CYC: ', CYC);
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function updateLogin(e) {
+     let v = e.target.value;
+     if (v == '' ) {
+       return;
+     } 
+     if( e.keyCode == 13 ) {
+       mM9.ret(v);
+       LoginName = v;
+       console.log(LoginName);
+       inputStyle1 = inputStyleB;
+       update0();
+     }
+}
+
+
+
+socket.onmessage = function(event) {
+  console.log('cow', event);
+  let gameArray = event.data.split(",");
+  console.log(event);
+  console.log(gameArray);
+  let makeStr = x => {
+    let l = x.length;
+    let str = '';
+      for (let i=5; i<l; i+=1) {
+        str = str + ', ' + x[i];
+      }
+    return (x[4] + ' ' + str);
+  }
+  let d2 = event.data.substring(0,6);
+  // let d3 = event.data.substring(2,6);
+  let sendersGroup = gameArray[1]; 
+  let sender = gameArray[2];
+  let extra = gameArray[3];
+  let ext4 = gameArray[4];
+  let ext5 = gameArray[5];
+  let ext6 = gameArray[6];
+  let ext7 = gameArray[7];
+  let ext8 = gameArray[8];
+  // let group = that.data.group;
+  // let name = that.state.name;
+  let ar = extra.split("<br>");
+  let ar2 = ar.map(function (x) {
+    return x.split("_")
+  })
+      switch (d2) {
+          case "CC#$42":                         // Not broadcast. Login message.
+            if (extra === '%#8*&&^1#$%^')  {
+              mM6.ret('Name taken');
+              //that.setState({info: `You entered a name which is already taken`})
+              setTimeout( function () {
+                document.location.reload(false);
+              },2000);
+            }
+            else {
+              mM6.ret(sender + '\'s socket open');
+              update0();
+            }
+      
+          break;
+
+          case "CZ#$42":                             // Solutions.
+          break;
+          
+          case "CA#$42":                             // Triggedarkred by ROLL
+              mM1.ret([extra,  ext4,  ext5,  ext6]);
+              mM2.ret([' + ', ' -', ' * ', ' / ', ' concat ']); 
+              update0();
+          break;
+
+          case "DI#$42":                              // Changes data.information .
+          break
+
+          case "CE#$42":                             // Updates numbers during play.
+          break;
+
+          case "CB#$42":                               // Updates the scoreboaard.
+          break;
+
+          case "CD#$42":
+          break;
+
+          case "CF#$42":                              // Re-set after a each clculation.
+          break;
+
+          case "CH#$42":
+          break;
+
+          case "CK#$42":                      // Updates DS_T after each calculation.
+          break;
+
+          case "CQ#$42":                 
+          break;
+
+          case "DQ#$42":                 
+          break;
+
+          case "EQ#$42":                 
+          break;
+
+          case "FQ#$42":                 
+          break;
+
+          case "GQ#$42":                 
+          break;
+
+          case "HQ#$42":                 
+          break;
+
+          case "CR#$42":                 // Resets the player interface after each round.
+          break;
+
+          case "CY#$42": // Triggedarkred by clicking "SCORE!".
+          break;
+
+          case "XY#$42":              // Triggedarkred by clicking "SCORE!" after "IMPOSSIBLE".
+          break;
+
+          case "DY#$42":                               // Triggered by clicking  "IMPOSSIBLE".
+          break;
+
+          case "DC#$42":
+          break;
+
+          case "DZ#$42":                                  // NOT IN USE
+          break;
+
+          case "IA#$42":
+          break;
+
+          default:
+          break;
+      }
+   }
+
+var inputStyle1 = inputStyleA;
+
+var inputStyleA = { backgroundColor: '#d8d17d', display: 'inline'} ;
+var inputStyleB = { display: 'none'} ;
+var style2 = {backgroundColor: '#000', textAlign: 'left', borderColor: 'darkred', outline: '0px',
+  color: '#CCFDCB', borderRadius: '10px', paddingTop: '1.1px', paddingBottom: '2px', marginRight: '3px',
+  marginLeft: '12px', fontSize: '18px' };
+var style1 = {backgroundColor: 'blue', textAlign: 'left', borderColor: 'lightblue', outline: '0px',
+  color: 'yellow', borderRadius: '10px', paddingTop: '1.1px', paddingBottom: '2px', marginRight: '3px',
+  marginLeft: '12px', fontSize: '18px' };
+var style3 = { marginTop: '40px', backgroundColor: '#000', height: '100%' , width: '100%', color: '#FFE4C4', fontSize: '18px', textAlign: 'left' };
+var styleM = {color: '#FF000A', marginLeft: '13px', marginBottom: '2px', fontSize: '21px' };
+var styleMI = {color: '#FF000A', marginLeft: '7px', marginBottom: '2px', fontSize: '21px' };
+var style0 = style2;
+
+var style4 = style2;
+var style4e = style1;
+var style4l = style2;
+
+var style5 = style2;
+var style5e = style1;
+var style5l = style2;
+
+var style6 = style2;
+var style6e = style1;
+var style6l = style2;
+
+var style7 = style2;
+var style7e = style1;
+var style7l = style2;
+
+var style8 = style2;
+var style8e = style1;
+var style8l = style2;
+
+var style9 = style2;
+var style9e = style1;
+var style9l = style2;
+
+var style10 = style2;
+var style10e = style1;
+var style10l = style2;
+
+var style11 = style2;
+var style11e = style1;
+var style11l = style2;
+
+var style12 = style2;
+var style12e = style1;
+var style12l = style2;
+
+var style13 = style2;
+var style13e = style1;
+var style13l = style2;
+
+var style14 = style2;
+var style14e = style1;
+var style14l = style2;
+
+var style15 = style2;
+var style15e = style1;
+var style15l = style2;
+
+var style16 = style2;
+var style16e = style1;
+var style16l = style2;
+
+var style17 = style2;
+var style17e = style1;
+var style17l = style2;
+
+var style18 = style2;
+var style18e = style1;
+var style18l = style2;
+
+var style19 = style2;
+var style19e = style1;
+var style19l = style2;
+
+var style20 = style2;
+var style20e = style1;
+var style20l = style2;
+
+var style21 = style2;
+var style21e = style1;
+var style21l = style2;
+
+var style22 = style2;
+var style22e = style1;
+var style22l = style2;
+
+var style23 = style2;
+var style23e = style1;
+var style23l = style2;
+
+var styleR = style2;
+var styleRe = style1;
+var styleRl = style2;
+
+function updateInput1(event) {
+  inputStyle1 = inputStyleB;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update3e(event) {
+  style0 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update3l(event) {
+  style0 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update4e(event) {
+  style4 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update4l(event) {
+  style4 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update5e(event) {
+  style5 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update5l(event) {
+  style5 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update6e(event) {
+  style6 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update6l(event) {
+  style6 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update7e(event) {
+  style7 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update7l(event) {
+  style7 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update8e(event) {
+  style8 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update8l(event) {
+  style8 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update9e(event) {
+  style9 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update9l(event) {
+  style9 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update10e(event) {
+  style10 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update10l(event) {
+  style10 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update11e(event) {
+  style11 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update11l(event) {
+  style11 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update12e(event) {
+  style12 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update12l(event) {
+  style12 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update13e(event) {
+  style13 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update13l(event) {
+  style13 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update14e(event) {
+  style14 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update14l(event) {
+  style14 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update15e(event) {
+  style15 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update15l(event) {
+  style15 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update16e(event) {
+  style16 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update16l(event) {
+  style16 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update17e(event) {
+  style17 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update17l(event) {
+  style13 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update18e(event) {
+  style18 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update18l(event) {
+  style18 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update19e(event) {
+  style19 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update19l(event) {
+  style19 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update20e(event) {
+  style20 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update20l(event) {
+  style20 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update21e(event) {
+  style21 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update21l(event) {
+  style21 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update22e(event) {
+  style22 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update22l(event) {
+  style22 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update23e(event) {
+  style23 = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function update23l(event) {
+  style23 = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function updateRe(event) {
+  styleR = style1;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+function updateRl(event) {
+  styleR = style2;
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mMI1.x, mMI2.x);
+  oldVnode = patch(oldVnode, newVnode);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

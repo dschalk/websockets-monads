@@ -9,6 +9,7 @@
   },
   "author": "Yassine Elouafi <yelouafi@gmail.com>",
   "dependencies": {
+    "engine.io-client": "^1.6.4",
     "snabbdom": "^0.2.0",
     "snabbdom-jsx": "^0.3.0",
     "webpack": "^1.12.9"

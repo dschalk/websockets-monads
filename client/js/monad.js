@@ -166,6 +166,15 @@ var mM7 = M(0);
 var mM8 = M(0);
 var mM9 = M(0);
 var mM10 = M(0);
+var mM11 = M(0);
+var mM12 = M(0);
+var mM13 = M(0);
+var mM14 = M(0);
+var mM15 = M(0);
+var mM16 = M(0);
+var mM17 = M(0);
+var mM18 = M(0);
+var mM19 = M(0);
 
 var MI = function MI(a, b) {
   return new MonadIter(a, b);
@@ -177,6 +186,77 @@ var mMI3 = MI(0, 'mMI3');
 var mMI4 = MI(0, 'mMI4');
 var mMI5 = MI(0, 'mMI5');
 var mMI6 = MI(0, 'mMI6');
+
+var toNums = function toNums(x,mon) {
+  mon.x = mon.x.map(x => parseFloat(x));
+  return mon; 
+}
+
+var calc = function calc(x,mon,a,op,b) { 
+  switch (op) {
+      case "add": mon.x.push( (a) + (b));
+      break;
+      case "subtract": mon.x.push( (a) - (b));
+      break;
+      case "mult": mon.x.push( (a) * (b));
+      break;
+      case "div": mon.x.push( (a) / (b));
+      break;
+      case "concat": mon.x.push( (a+""+b));
+      break;
+      default : 'Major Malfunction in calc.';
+  }
+  return mon;
+}
+
+var push = function push(a,mon,monq,i) {
+    mon.x.push(monq.x[i]);
+    return mon;
+}
+
+var displayOff = function displayOff(x,mon,a) {
+    document.getElementById(a).style.display = 'none';
+    return mon;
+}
+
+var displayInline = function displayInline(x,mon,a) {
+    document.getElementById(a).style.display = 'inline';
+    return mon;
+}
+
+var displayBlock = function displayBlock(x,mon,a) {
+    document.getElementById(a).style.display = 'block';
+    return mon;
+}
+
+var popPush = function popPush(x,mon,a) {
+  mon.x.pop;
+  mon.x.push(a);
+  return mon;
+}
+
+var blank = function blank(v,mon,i) {
+  mon.x[i] = "";
+  return mon;
+}
+
+var clean = function clean(x,mon) {
+  mon.x = mon.x.filter(x => (x != ""));
+  return mon;
+}
+  
+var toFloat = function toFloat(x,mon) {
+  var newx = mon.x.map(function (a) {
+    return parseFloat(a);
+  });
+  mon.ret(newx);
+  return mon;
+};
+
+var splice = function splice(x,mon,i) {
+  mon.x.splice(i,1);
+  return mon;
+}
 
 var doub = function doub(x, mon) {
   mon.ret(x + x);
@@ -193,7 +273,7 @@ var tripple = function tripple(x, mon) {
   return mon;
 };
 
-  function cube(x, mon) {
+var cube =  function cube(x, mon) {
   mon.ret(x * x * x);
   return mon;
 };

@@ -122,7 +122,7 @@ main = do
     state <- atomically $ newTMVar newServerState
     Warp.runSettings Warp.defaultSettings
       { Warp.settingsTimeout = 36000,
-        Warp.settingsPort = 3000
+        Warp.settingsPort = 4002
       } $ WaiWS.websocketsOr WS.defaultConnectionOptions (application state) staticApp
 staticApp :: Network.Wai.Application
 staticApp = Static.staticApp $ Static.embeddedSettings $(embedDir "client")
@@ -137,8 +137,8 @@ application state pending = do
             | any ($ getName client)
                 [T.null] ->
                     WS.sendTextData conn ("Name cannot be empty" :: Text)
-            | clientExists (getName client) clients ->
-                WS.sendTextData conn ("CC#$42,seven,seven,%#8*&&^1#$%^" :: Text)
+          --  | clientExists (getName client) clients ->
+          --      WS.sendTextData conn ("CC#$42,seven,seven,%#8*&&^1#$%^" :: Text)
             | otherwise -> flip finally disconnect $ do
                     let name = getName client
                     st <- atomically $ takeTMVar state
@@ -161,6 +161,7 @@ application state pending = do
 talk :: WS.Connection -> TMVar ServerState -> Client -> IO ()
 talk conn state (_, _, _, _) = forever $ do
     msg <- WS.receiveData conn
+    print msg   
     let msgArray = splitOn "," (T.unpack msg)
     let group = T.pack (msgArray !! 1)
     let sender = T.pack (msgArray !! 2)
