@@ -3,7 +3,19 @@ import snabbdom from 'snabbdom';
 import h from 'snabbdom/h';
 import cow from './cow.js';
 
-const socket = new WebSocket("ws://localhost:4002");
+// const socket = new WebSocket("ws://schalk.net:4002");
+
+function createWebSocket(path) {
+    let host = window.location.hostname;
+    if(host == '') host = 'localhost';
+    let uri = 'ws://' + host + ':4002' + path;
+
+    let Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
+    return new Socket(uri);
+}
+
+var socket = createWebSocket('/');
+
 var LoginName;
 var xyz = 0;
 var numsA = [];
@@ -76,6 +88,12 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
             m7[3]   ),
       h('button', {on: { mouseenter: update16e, mouseleave: update16l, click: updateOp }, style: style16},
             m7[4]   ),
+      h('p', '  '  ),
+
+          h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: style5},
+                     `ROLL`   ),
+
+
       h('p', 'Now click ROLL. '  ),
       h('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. ',  ),
       h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The simulate the roll of twosix-sided, one twelve-sided, and one twenty-sided die. '  ),
@@ -154,8 +172,6 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
                      `REFRESH`   ),
           h('br', ),           
           h('br', ),           
-          h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: style5},
-                     `ROLL`   ),
            
         ] )        
     ] )
