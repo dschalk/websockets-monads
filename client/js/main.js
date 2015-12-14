@@ -197,14 +197,13 @@ function update0() {
 }
 
 function updateNums(e) {
-  let v = e.target.value;
-  mM3.bnd(push,mM1,v).bnd(() => mM1.x[v] = "");
-  mM5.bnd(update)
-      .bnd(() => {mMI1.block()
+  mM2.ret([e.target.value, e.target.textContent])
+  .bnd(() => mM3).bnd(push,mM2.x[1]).bnd(() => {mM1.x[mM2.x[0]] = ""; return mMI1;})
+      .block()
       .bnd(() => mM3
       .bnd(toFloat)
       .bnd(() => mM1
-      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
+      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
       .bnd(clean)
       .bnd(displayOff, mM1.x.length)
       .bnd(() => mM3
@@ -212,10 +211,10 @@ function updateNums(e) {
       .bnd(() => mM4
       .ret(0).bnd(mM8.ret)
       .bnd(() => mM5.ret('Done')
-      .bnd(update)   )) )) } )
+      .bnd(update)   )) ))  )
   mM5.ret('Waiting')     
   .bnd(update)
-  .bnd(() => {if (mM8.x != 0 && mM3.x.length == 2)  { mMI1.release() }} )
+  .bnd(() => {if (mM8.x !== 0 && mM3.x.length === 2)  { mMI1.release() }} )
 }
 
 function updateOp(e) {
@@ -236,7 +235,7 @@ function updateOp(e) {
     .bnd(update)   )) )) } )
   mM5.ret('Waiting')
   .bnd(update)
-  .bnd(() => {if (mM3.x.length == 2)  { mMI2.release() }} )
+  .bnd(() => {if (mM3.x.length === 2)  { mMI2.release() }} )
 }
 
 function updateLogin(e) {

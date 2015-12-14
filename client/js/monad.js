@@ -209,8 +209,8 @@ var calc = function calc(x,mon,a,op,b) {
   return mon;
 }
 
-var push = function push(a,mon,monq,i) {
-    mon.x.push(monq.x[i]);
+var push = function push(a,mon,v) {
+    mon.x.push(v);
     return mon;
 }
 
@@ -241,7 +241,7 @@ var blank = function blank(v,mon,i) {
 }
 
 var clean = function clean(x,mon) {
-  mon.x = mon.x.filter(x => (x != ""));
+  mon.x = mon.x.filter(x => (x !== ""));
   return mon;
 }
   
