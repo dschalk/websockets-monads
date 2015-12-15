@@ -101,7 +101,7 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
 }
 
 var newVnode = function newVnode() {
-  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mMI1.x, mMI2.x, mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
+  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
   return newVnode;
 };
 
@@ -123,34 +123,38 @@ function updateNums(e) {
           });
         });
       });
+    }).bnd(function () {
+      return mMI2.block().bnd(function () {
+        return mM13.ret(mM13.x + 1).bnd(function () {
+          return send();
+        });
+      });
     });
   });
-  mM5.ret('Waiting').bnd(update).bnd(function () {
-    if (mM8.x !== 0 && mM3.x.length === 2) {
-      mMI1.release();
-    }
-  });
+  mM5.ret('Waiting').bnd(update).bnd(next, mM8.x !== 0 && mM3.x.length === 2, mMI1).bnd(update).bnd(next, mM1.x[mM1.x.length - 1] == 20, mMI2).bnd(update);
 }
 
 function updateOp(e) {
   mM8.ret(e.target.textContent).bnd(update).bnd(function () {
-    mMI2.block().bnd(function () {
-      return mM3.bnd(toFloat).bnd(function () {
-        return mM1.bnd(calc, mM3.x[0], mM8.x, mM3.x[1]);
-      }).bnd(clean).bnd(displayOff, mM1.x.length).bnd(function () {
+    return mMI1;
+  }).block().bnd(function () {
+    return mM3.bnd(toFloat).bnd(function () {
+      return mM1.bnd(calc, mM3.x[0], mM8.x, mM3.x[1]).bnd(clean).bnd(displayOff, mM1.x.length).bnd(function () {
         return mM3.ret([]).bnd(function () {
           return mM4.ret(0).bnd(mM8.ret).bnd(function () {
             return mM5.ret('Done').bnd(update);
           });
         });
       });
+    }).bnd(function () {
+      return mMI2.block().bnd(function () {
+        return mM13.ret(mM13.x + 1).bnd(function () {
+          return send();
+        });
+      });
     });
   });
-  mM5.ret('Waiting').bnd(update).bnd(function () {
-    if (mM3.x.length === 2) {
-      mMI2.release();
-    }
-  });
+  mM5.ret('Waiting').bnd(update).bnd(next, mM3.x.length == 2, mMI1).bnd(update).bnd(next, mM1.x[mM1.x.length - 1] == 20, mMI2).bnd(update);
 }
 
 function updateLogin(e) {
@@ -272,6 +276,9 @@ socket.onmessage = function (event) {
       mM6.bnd(displayInline, 1);
       mM6.bnd(displayInline, 2);
       mM6.bnd(displayInline, 3);
+      var senderScore = sender + '’s score: ' + mM13.x;
+
+      mM14.ret(senderScore);
       update0();
       break;
 
@@ -684,7 +691,7 @@ function updateRl(event) {
 }
 
 var update = function update(x, mon) {
-  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mMI1.x, mMI2.x, mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
+  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
   oldVnode = patch(oldVnode, newVnode);
   return mon;
 };

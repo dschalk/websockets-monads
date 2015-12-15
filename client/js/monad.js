@@ -258,6 +258,14 @@ var splice = function splice(x,mon,i) {
   return mon;
 }
 
+var next = function next(x,mon,bool,mon2) {
+  if (bool) {
+    mon2.release();
+    console.log(mon2.id + ' has been released')
+  }
+  return mon
+}
+
 var doub = function doub(x, mon) {
   mon.ret(x + x);
   return mon;
@@ -291,7 +299,6 @@ var mult = function mult(x, mon, y) {
 var lg = '';
 
 var log = function log(x, mon, y) {
-  lg = y;
   return mon;
 };
 

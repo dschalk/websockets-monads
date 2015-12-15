@@ -186,7 +186,7 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
 
 
 var newVnode  = () => {
-  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mMI1.x, mMI2.x,
+  var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x,
   mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
   return newVnode;
 }
@@ -197,7 +197,7 @@ function update0() {
 }
 
 function updateNums(e) {
-  mM2.ret([e.target.value, e.target.textContent])
+  mM2.ret([e.target.value, e.target.textContent]) 
   .bnd(() => mM3).bnd(push,mM2.x[1]).bnd(() => {mM1.x[mM2.x[0]] = ""; return mMI1;})
       .block()
       .bnd(() => mM3
@@ -211,20 +211,25 @@ function updateNums(e) {
       .bnd(() => mM4
       .ret(0).bnd(mM8.ret)
       .bnd(() => mM5.ret('Done')
-      .bnd(update)   )) ))  )
+      .bnd(update)   )) ))  
+      .bnd(() => mMI2.block()
+      .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
   mM5.ret('Waiting')     
   .bnd(update)
-  .bnd(() => {if (mM8.x !== 0 && mM3.x.length === 2)  { mMI1.release() }} )
+  .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
+  .bnd(update)
+  .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+  .bnd(update) 
 }
 
 function updateOp(e) {
   mM8.ret(e.target.textContent)
   .bnd(update)
-  .bnd(() => {mMI2.block()
+  .bnd(() => mMI1).block()
     .bnd(() => mM3
     .bnd(toFloat)
     .bnd(() => mM1
-    .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
+    .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
     .bnd(clean)
     .bnd(displayOff, mM1.x.length)
     .bnd(() => mM3
@@ -232,10 +237,15 @@ function updateOp(e) {
     .bnd(() => mM4
     .ret(0).bnd(mM8.ret)
     .bnd(() => mM5.ret('Done')
-    .bnd(update)   )) )) } )
+    .bnd(update)   )) )) 
+      .bnd(() => mMI2.block()
+      .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
   mM5.ret('Waiting')
   .bnd(update)
-  .bnd(() => {if (mM3.x.length === 2)  { mMI2.release() }} )
+  .bnd(next, (mM3.x.length == 2),  mMI1)
+  .bnd(update)
+  .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+  .bnd(update) 
 }
 
 function updateLogin(e) {
@@ -349,6 +359,9 @@ socket.onmessage = function(event) {
               mM6.bnd(displayInline,1);
               mM6.bnd(displayInline,2);
               mM6.bnd(displayInline,3);
+              var senderScore = sender + "\u2019s score: " + mM13.x;
+
+              mM14.ret(senderScore);
               update0();
           break;
 
@@ -751,7 +764,7 @@ function updateRl(event) {
 }
 
 var update = function update(x,mon) {
-  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x, mMI1.x, mMI2.x,
+  const newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x,
   mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
   oldVnode = patch(oldVnode, newVnode);
   return mon;
