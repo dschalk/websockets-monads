@@ -261,7 +261,6 @@ var splice = function splice(x,mon,i) {
 var next = function next(x,mon,bool,mon2) {
   if (bool) {
     mon2.release();
-    console.log(mon2.id + ' has been released')
   }
   return mon
 }

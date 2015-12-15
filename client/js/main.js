@@ -97,14 +97,17 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
       h('p', 'Now click ROLL. '  ),
       h('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. ',  ),
       h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. They are integral to the "Game of Score" application, in which players gain points by making the number "20". '  ),
-      h('p', 'Here are the click handlers, one for all four numbers and one for the five operators: '  ),
+      h('p', 'Every time you compute the number 20, mM13.x gets incremented by 1 and the mM14.x display on the right shows "<login_name>\'s score: <score>". As you can see in the click handlers below below, there are two chains for number clicks and two chains for operator clicks. In each case, the top chain is the execution path and the bottom chain uses boolean tests to control when the chain should compute a result and when the player should be given a point. Blocking and releasing is implemented with instances of MonadIter.'  ),
+      h('p', 'I have written algorithms for such behavior in the past. Never before has the code been so concise and well organized. First I\'ll show the two click handlers; one for numbers and the other for operators. '    ),
       cow.dice,
       h('p', 'When numbers are clicked, they get pushed into mM3.x, an initially empty array. When an operator is clicked, it replaces "0" as the value of mM8. So when mM3.x.length === 2 and mM8.x !== 0, it is time for the computation to go forward. '  ),
-      h('p', 'The "if" block could have contained the code to be executed. It could have contained a call to a function containing the code. "block" and "release" are not essential here, but this is an opportunity to demonstrate them. I like block and release because they make it very easy (for someone familiar with the monads) to understand the code. At first glance, you see the block. Your eyes scan down to the release. Right away you see when halted code will execute. Then look back up and see what it does. ' ),
-      h('p', 'My first "Game of Score" application ran on a Node.js server. The algorithm for the successive computations was a convoluted mess of callbacks between modules. Later, I re-made the application using a modified Haskell Wai-Websockets server with React in the browser. That was less of a mess, but there were plenty of calls to "React.setState" and the code wasn\'t real easy to understand. Here, instead of multiple function calls, I have two consise monad chains. '  ),
-      h('p', 'The next monad constructor might be a "maybe" monad that quickly propagates failure down the chain, instructing each link along the way not to do anything except return the failure message. '   ),
-      h('p', 'There are convenient ways to avoid interference between routines. The simple monads don\'t have to be named, so a chain can start with "new Monad". For example, "new Monad(3)).bnd(cube) results in an anonymous monad with value "27". Name spaces can be used for MonadIterator. My name is David Schalk, so in a team project I could let it be known that I claim the exlusive right to create monad references prefixed by "DS". '  ),
-      h('p', 'Another idea is a monad that locks when it is being used. They could be similar to Haskell MVars and serve as a foundation on which to build a means to assure that transactions are atomic; that is, that they execute completely or not at all. '  ),
+      h('p', 'mM1 hold the initial dice roll and the subsequent arrays of available numbers. When the last element in the mM1.x array (mMx.x[mM1.x.length -1] is "20", the player get an additional point and a new roll.'   ), 
+      h('p', 'My first "Game of Score" application ran on a Node.js server. The algorithm for the successive computations was a convoluted mess of callbacks between modules. Later, I re-made the application using a modified Haskell Wai-Websockets server with React in the browser. That was less of a mess, but there were plenty of calls to "React.setState" and the code wasn\'t real easy to follow. Using these monads, the main function calls are organized in one chain and timing decisions are organized in another. Once you get used to it, the code is very easy to follow. Identify the blocks in one chain and see when they are released in the other.'  ),
+      h('p', 'The functions provided to bind are simple. They perform a task, and then return a monad so the chain can continue. Here is the code for the decision function "next": '    ),
+      cow.next,
+      h('p', 'Using "bnd" with "next", any monad can release any block. '    ),
+      h('span', 'In "Page 3" of this series, "Websockets-monads-II", I will embellish the dice roll algorithm with more feature. All of the code is available at '   ),
+      h('a', {props: {href: 'https://github.com/dschalk'}, style: {color: '#EECCFF'}}, 'github.com/dschalk'  ),
       h('div', {style: {height: '300px'}} ),
         ] ), 
       h ('div',{style: { width: '30%', position: 'fixed', top: '40px', right: '15px', color: '#CCFDDA'}},
@@ -184,13 +187,11 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
     ] )
 }  
 
-
 var newVnode  = () => {
   var newVnode = view(mM1.x, mM2.x, mM3.x, mM4.x, mM5.x, mM6.x, mM7.x, mM8.x, mM9.x,
   mM10.x, mM11.x, mM12.x, mM13.x, mM14.x, mM15.x, mM16.x, mM17.x, mM18.x, mM19.x, mMI1.x, mMI2.x);
   return newVnode;
 }
-
 
 function update0() {
   oldVnode = patch(oldVnode, newVnode());
@@ -214,10 +215,9 @@ function updateNums(e) {
       .bnd(update)   )) ))  
       .bnd(() => mMI2.block()
       .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
+
   mM5.ret('Waiting')     
-  .bnd(update)
   .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
-  .bnd(update)
   .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
   .bnd(update) 
 }
@@ -240,10 +240,9 @@ function updateOp(e) {
     .bnd(update)   )) )) 
       .bnd(() => mMI2.block()
       .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
+
   mM5.ret('Waiting')
-  .bnd(update)
   .bnd(next, (mM3.x.length == 2),  mMI1)
-  .bnd(update)
   .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
   .bnd(update) 
 }

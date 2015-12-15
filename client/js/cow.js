@@ -89,83 +89,72 @@ const steps = h('pre', {style: {color: '#AFEEEE' }}, `
 ` );  
 
 const dice = h('pre', {style: {color: '#AFEEEE' }}, `
-function updateNums(e) {
-  mM2.ret([e.target.value, e.target.textContent])
-  .bnd(() => mM3)
-  .bnd(push,mM2.x[1])
-  .bnd(() => {mM1.x[mM2.x[0]] = ""; return mMI1;})
+    function updateNums(e) {
+      mM2.ret([e.target.value, e.target.textContent]) 
+      .bnd(() => mM3)
+      .bnd(push,mM2.x[1])
+      .bnd(() => {mM1.x[mM2.x[0]] = ""; return mMI1;})    
       .block()
-      .bnd(() => mM3
-      .bnd(toFloat)
-      .bnd(() => mM1
-      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
-      .bnd(clean)
-      .bnd(displayOff, mM1.x.length)
-      .bnd(() => mM3
-      .ret([])
-      .bnd(() => mM4
-      .ret(0).bnd(mM8.ret)
-      .bnd(() => mM5.ret('Done')
-      .bnd(update)   )) ))  )
-  mM5.ret('Waiting')     
-  .bnd(update)
-  .bnd(() => {if (mM8.x !== 0 && mM3.x.length === 2)  { mMI1.release() }} )
-}
-
-function updateOp(e) {
-  mM8.ret(e.target.textContent)
-  .bnd(update)
-  .bnd(() => {mMI2.block()
-    .bnd(() => mM3
-    .bnd(toFloat)
-    .bnd(() => mM1
-    .bnd(calc,mM3.x[0], mM8.x, mM3.x[1]))
-    .bnd(clean)
-    .bnd(displayOff, mM1.x.length)
-    .bnd(() => mM3
-    .ret([])
-    .bnd(() => mM4
-    .ret(0).bnd(mM8.ret)
-    .bnd(() => mM5.ret('Done')
-    .bnd(update)   )) )) } )
-  mM5.ret('Waiting')
-  .bnd(update)
-  .bnd(() => {if (mM3.x.length === 2)  { mMI2.release() }} )
+        .bnd(() => mM3
+        .bnd(toFloat)
+        .bnd(() => mM1
+        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
+        .bnd(clean)
+        .bnd(displayOff, mM1.x.length)
+        .bnd(() => mM3
+        .ret([])
+        .bnd(() => mM4
+        .ret(0).bnd(mM8.ret)
+        .bnd(() => mM5.ret('Done')
+        .bnd(update)   )) ))  
+        .bnd(() => mMI2
+        .block()
+          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))    
+    
+      mM5.ret('Waiting')     
+      .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
+      .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+      .bnd(update) 
+    }
+    
+    function updateOp(e) {
+      mM8.ret(e.target.textContent)
+      .bnd(update)
+      .bnd(() => mMI1)
+      .block()
+        .bnd(() => mM3
+        .bnd(toFloat)
+        .bnd(() => mM1
+        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
+        .bnd(clean)
+        .bnd(displayOff, mM1.x.length)
+        .bnd(() => mM3
+        .ret([])
+        .bnd(() => mM4
+        .ret(0).bnd(mM8.ret)
+        .bnd(() => mM5.ret('Done')
+        .bnd(update)   )) )) 
+        .bnd(() => mMI2
+        .block()
+          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
+    
+      mM5.ret('Waiting')
+      .bnd(next, (mM3.x.length == 2),  mMI1)
+      .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+      .bnd(update) 
 }
 ` );  
 
-const next = h('div', {style: {fontSize: '28px', color: 'FFFF00'}}, 'mMI2.release()'  );
-/*
-const stepsF = () =>  mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
-     .bnd(() => mM1.ret('Click the mMI2.release() button to proceed')
-     .bnd(() => mMI2.block()
-     .bnd(() => mM2.ret('Click it again.')
-     .bnd(() => mMI2.block()
-     .bnd(() => mM3.ret('Keep going')
-     .bnd(() => mMI2.block()
-     .bnd(() => mM4.ret('One more')
-     .bnd(() => mMI2.block()
-     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
-     .bnd(mM4.ret)
-      ))))))))) 
-*/
-           
+const next = h('pre', {style: {color: '#AFEEEE' }}, `
+    var next = function next(x,mon,bool,mon2) {  
+      if (bool) {
+        mon2.release();
+      }
+      return mon
+    }
+` );  
 
 export default {monad, monadIter, steps, next, dice};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
