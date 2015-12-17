@@ -89,12 +89,16 @@ const steps = h('pre', {style: {color: '#AFEEEE' }}, `
 ` );  
 
 const dice = h('pre', {style: {color: '#AFEEEE' }}, `
-    function updateNums(e) {
-      mM2.ret([e.target.value, e.target.textContent]) 
-      .bnd(() => mM3)
-      .bnd(push,mM2.x[1])
-      .bnd(() => {mM1.x[mM2.x[0]] = ""; return mMI1;})    
-      .block()
+  function updateNums(e) {
+    mM2.ret([e.target.value, e.target.textContent]) 
+    .bnd(() => mM3)
+    .bnd(push,mM2.x[1])
+    .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})
+    .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
+    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+    .bnd(update)
+    .bnd(() => mMI1
+        .block()
         .bnd(() => mM3
         .bnd(toFloat)
         .bnd(() => mM1
@@ -108,20 +112,19 @@ const dice = h('pre', {style: {color: '#AFEEEE' }}, `
         .bnd(() => mM5.ret('Done')
         .bnd(update)   )) ))  
         .bnd(() => mMI2
+            .block()
+            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
+  }
+  
+  function updateOp(e) {
+    mM8.ret(e.target.textContent)
+    .bnd(() => mM5.ret('Waiting')
+    .bnd(next, (mM3.x.length == 2),  mMI1)
+    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
+    .bnd(update) 
+    .bnd(update)
+    .bnd(() => mMI1)
         .block()
-          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))    
-    
-      mM5.ret('Waiting')     
-      .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
-      .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
-      .bnd(update) 
-    }
-    
-    function updateOp(e) {
-      mM8.ret(e.target.textContent)
-      .bnd(update)
-      .bnd(() => mMI1)
-      .block()
         .bnd(() => mM3
         .bnd(toFloat)
         .bnd(() => mM1
@@ -134,15 +137,9 @@ const dice = h('pre', {style: {color: '#AFEEEE' }}, `
         .ret(0).bnd(mM8.ret)
         .bnd(() => mM5.ret('Done')
         .bnd(update)   )) )) 
-        .bnd(() => mMI2
-        .block()
-          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send()))))
-    
-      mM5.ret('Waiting')
-      .bnd(next, (mM3.x.length == 2),  mMI1)
-      .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
-      .bnd(update) 
-}
+            .bnd(() => mMI2.block()
+            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
+  }
 ` );  
 
 const next = h('pre', {style: {color: '#AFEEEE' }}, `
