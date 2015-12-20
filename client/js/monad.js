@@ -3,6 +3,7 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+"use strict";
 
 var Monad = function Monad(z) {
   var _this = this;
@@ -50,10 +51,12 @@ var MonadIter = function MonadIter(z, g) {
 
   this.block = function () {
     _this2.flag = true;
+    console.log(this.id, ": block()")
     return _this2;
   };
 
   this.release = function () {
+    console.log(this.id, ": release()")
     var self = _this2;
     var p = _this2.p;
 
@@ -192,21 +195,22 @@ var toNums = function toNums(x,mon) {
   return mon; 
 }
 
-var calc = function calc(x,mon,a,op,b) { 
+var calc = function calc(a,op,b) { 
+  var result;
   switch (op) {
-      case "add": mon.x.push( (a) + (b));
+      case "add": result = (a + b);
       break;
-      case "subtract": mon.x.push( (a) - (b));
+      case "subtract": result = (a - b);
       break;
-      case "mult": mon.x.push( (a) * (b));
+      case "mult": result = (a * b);
       break;
       case "div": mon.x.push( (a) / (b));
       break;
-      case "concat": mon.x.push( (a+""+b));
+      case "concat": result = (a+""+b)*1.0;
       break;
       default : 'Major Malfunction in calc.';
   }
-  return mon;
+  return result;
 }
 
 var push = function push(a,mon,v) {
@@ -241,7 +245,7 @@ var blank = function blank(v,mon,i) {
 }
 
 var clean = function clean(x,mon) {
-  mon.x = mon.x.filter(x => (x !== ""));
+  mon.x = mon.x.filter(x => (x !== "" && x !== undefined));
   return mon;
 }
   

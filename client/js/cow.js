@@ -62,8 +62,8 @@ const monadIter = h('pre', {style: {color: '#AFEEEE' }}, `    class MonadIter {
     };
 ` );  
 
-const steps = h('pre', {style: {color: '#AFEEEE' }}, `
-    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
+const steps = h('pre', {style: {color: '#AFEEEE' }}, 
+`    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
      .bnd(() => mM1
      .ret('Click mMI2.release() to proceed')
      .bnd(refresh)
@@ -85,73 +85,75 @@ const steps = h('pre', {style: {color: '#AFEEEE' }}, `
          .block()
      .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
      .bnd(mM4.ret).bnd(refresh)
-      ))))))))) 
-` );  
+      ))))))))) `
+ );  
 
-const dice = h('pre', {style: {color: '#AFEEEE' }}, `
-  function updateNums(e) {
+const dice = h('pre', {style: {color: '#AFEEEE' }}, 
+`  function updateNums(e) {
     mM2.ret([e.target.value, e.target.textContent]) 
     .bnd(() => mM3)
     .bnd(push,mM2.x[1])
     .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})
-    .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
-    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
     .bnd(update)
-    .bnd(() => mMI1
-        .block()
-        .bnd(() => mM3
-        .bnd(toFloat)
-        .bnd(() => mM1
-        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
-        .bnd(clean)
-        .bnd(displayOff, mM1.x.length)
-        .bnd(() => mM3
-        .ret([])
-        .bnd(() => mM4
-        .ret(0).bnd(mM8.ret)
-        .bnd(() => mM5.ret('Done')
-        .bnd(update)   )) ))  
-        .bnd(() => mMI2
-            .block()
-            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
+    updateCalc();
   }
   
   function updateOp(e) {
-    mM8.ret(e.target.textContent)
-    .bnd(() => mM5.ret('Waiting')
-    .bnd(next, (mM3.x.length == 2),  mMI1)
-    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
-    .bnd(update) 
-    .bnd(update)
-    .bnd(() => mMI1)
-        .block()
-        .bnd(() => mM3
-        .bnd(toFloat)
-        .bnd(() => mM1
-        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
-        .bnd(clean)
-        .bnd(displayOff, mM1.x.length)
-        .bnd(() => mM3
-        .ret([])
-        .bnd(() => mM4
-        .ret(0).bnd(mM8.ret)
-        .bnd(() => mM5.ret('Done')
-        .bnd(update)   )) )) 
-            .bnd(() => mMI2.block()
-            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
-  }
-` );  
+    mM8.ret(e.target.textContent);
+    updateCalc();
+  }  
 
-const next = h('pre', {style: {color: '#AFEEEE' }}, `
+  function updateCalc() {  
+    if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};
+    mM19.bnd(() => (
+    (mM3
+      .bnd(toFloat)
+      .bnd(() => mM7
+      .fmap(() => {return calc(mM3.x[0], mM8.x, mM3.x[1])})
+      .bnd(() => mM1.bnd(push, mM7.x)
+      .bnd(clean)
+      .bnd(next, (mM7.x == 18), mMI4)
+      .bnd(next, (mM7.x == 20), mMI2) )
+      .bnd(displayOff, mM1.x.length)
+      .bnd(() => mM3
+      .ret([])
+      .bnd(() => mM4
+      .ret(0).bnd(mM8.ret)
+      .bnd(() => mM5.ret('Done')
+      .bnd(update)   )))) ),
+    (mMI2.block()
+      .bnd(() => mM13
+      .ret(mM13.x + 1)
+      .bnd(() => send())) ),
+    (mMI4.block()
+      .bnd(() => mM13
+      .ret(mM13.x + 3)
+      .bnd(() => send())) )  
+    )) 
+  }
+  
+);  
+
+const next = h('pre', {style: {color: '#AFEEEE' }}, 
     var next = function next(x,mon,bool,mon2) {  
       if (bool) {
         mon2.release();
       }
       return mon
-    }
-` );  
+    }  `
+);  
 
-export default {monad, monadIter, steps, next, dice};
+
+const send = h('pre', {style: {color: '#AFEEEE' }}, 
+`    var send = function(event) {
+        socket.send("CA#$42,solo," + LoginName +",6,6,12,20");
+    };`
+);  
+
+
+
+
+export default {monad, monadIter, steps, next, dice, send};
 
 
 

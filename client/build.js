@@ -2,7 +2,7 @@
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-    value: true
+  value: true
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -19,13 +19,13 @@ var monad = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, 
 
 var monadIter = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '    class MonadIter {\n    constructor(z,g) {\n\n        this.x = z;\n        this.id = g;\n        this.flag = false;\n        this.p = [];\n  \n        this.block = () => {\n            this.flag = true;\n            return this;\n        }\n\n        this.release = () => {\n            let self = this;\n            let p = this.p;\n  \n            if (p[1] === \'bnd\') {\n                p[2](self.x, self, ...p[3]);\n                self.flag = false;\n                return self;\n            }\n  \n            if (p[1] === \'ret\') {\n                self.x = p[2];\n                self.flag = false;\n                return self;\n            }\n  \n            if (p[1] === \'fmap\') { \n                p[3].ret(p[2](p[3].x, ...p[4]));\n                self.flag = false;\n                return p[3];\n            }\n        }\n    };\n');
 
-var steps = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '\n    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)\n     .bnd(() => mM1\n     .ret(\'Click mMI2.release() to proceed\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM2\n     .ret(\'Click it again.\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM3.ret(\'Keep going\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM4\n     .ret(\'One more\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)\n     .bnd(mM4.ret).bnd(refresh)\n      ))))))))) \n');
+var steps = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)\n     .bnd(() => mM1\n     .ret(\'Click mMI2.release() to proceed\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM2\n     .ret(\'Click it again.\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM3.ret(\'Keep going\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM4\n     .ret(\'One more\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)\n     .bnd(mM4.ret).bnd(refresh)\n      ))))))))) ');
 
-var dice = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '\n  function updateNums(e) {\n    mM2.ret([e.target.value, e.target.textContent]) \n    .bnd(() => mM3)\n    .bnd(push,mM2.x[1])\n    .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})\n    .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)\n    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)\n    .bnd(update)\n    .bnd(() => mMI1\n        .block()\n        .bnd(() => mM3\n        .bnd(toFloat)\n        .bnd(() => mM1\n        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])\n        .bnd(clean)\n        .bnd(displayOff, mM1.x.length)\n        .bnd(() => mM3\n        .ret([])\n        .bnd(() => mM4\n        .ret(0).bnd(mM8.ret)\n        .bnd(() => mM5.ret(\'Done\')\n        .bnd(update)   )) ))  \n        .bnd(() => mMI2\n            .block()\n            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))\n  }\n  \n  function updateOp(e) {\n    mM8.ret(e.target.textContent)\n    .bnd(() => mM5.ret(\'Waiting\')\n    .bnd(next, (mM3.x.length == 2),  mMI1)\n    .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)\n    .bnd(update) \n    .bnd(update)\n    .bnd(() => mMI1)\n        .block()\n        .bnd(() => mM3\n        .bnd(toFloat)\n        .bnd(() => mM1\n        .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])\n        .bnd(clean)\n        .bnd(displayOff, mM1.x.length)\n        .bnd(() => mM3\n        .ret([])\n        .bnd(() => mM4\n        .ret(0).bnd(mM8.ret)\n        .bnd(() => mM5.ret(\'Done\')\n        .bnd(update)   )) )) \n            .bnd(() => mMI2.block()\n            .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))\n  }\n');
+var dice = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '  function updateNums(e) {\n    mM2.ret([e.target.value, e.target.textContent]) \n    .bnd(() => mM3)\n    .bnd(push,mM2.x[1])\n    .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})\n    .bnd(update)\n    updateCalc();\n  }\n  \n  function updateOp(e) {\n    mM8.ret(e.target.textContent);\n    updateCalc();\n  }  \n\n  function updateCalc() {  \n    if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};\n    mM19.bnd(() => (\n    (mM3\n      .bnd(toFloat)\n      .bnd(() => mM7\n      .fmap(() => {return calc(mM3.x[0], mM8.x, mM3.x[1])})\n      .bnd(() => mM1.bnd(push, mM7.x)\n      .bnd(clean)\n      .bnd(next, (mM7.x == 18), mMI4)\n      .bnd(next, (mM7.x == 20), mMI2) )\n      .bnd(displayOff, mM1.x.length)\n      .bnd(() => mM3\n      .ret([])\n      .bnd(() => mM4\n      .ret(0).bnd(mM8.ret)\n      .bnd(() => mM5.ret(\'Done\')\n      .bnd(update)   )))) ),\n    (mMI2.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 1)\n      .bnd(() => send())) ),\n    (mMI4.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 3)\n      .bnd(() => send())) )  \n    )) \n  }\n  \n);  \n\nconst next = h(\'pre\', {style: {color: \'#AFEEEE\' }}, \n    var next = function next(x,mon,bool,mon2) {  \n      if (bool) {\n        mon2.release();\n      }\n      return mon\n    }  ');
 
-var next = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '\n    var next = function next(x,mon,bool,mon2) {  \n      if (bool) {\n        mon2.release();\n      }\n      return mon\n    }\n');
+var send = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '    var send = function(event) {\n        socket.send("CA#$42,solo," + LoginName +",6,6,12,20");\n    };');
 
-exports['default'] = { monad: monad, monadIter: monadIter, steps: steps, next: next, dice: dice };
+exports['default'] = { monad: monad, monadIter: monadIter, steps: steps, next: next, dice: dice, send: send };
 module.exports = exports['default'];
 
 },{"snabbdom":9,"snabbdom/h":3}],2:[function(require,module,exports){
@@ -45,12 +45,10 @@ var _cowJs = require('./cow.js');
 
 var _cowJs2 = _interopRequireDefault(_cowJs);
 
-// const socket = new WebSocket("ws://schalk.net:4002");
-
 function createWebSocket(path) {
   var host = window.location.hostname;
   if (host == '') host = 'localhost';
-  var uri = 'ws://' + host + ':4002' + path;
+  var uri = 'ws://' + host + ':3093' + path;
 
   var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
   return new Socket(uri);
@@ -83,7 +81,7 @@ https: //github.com/paldepind/snabbdom
 var oldVnode = document.getElementById('placeholder');
 
 function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, mI1, mI2) {
-  return (0, _snabbdomH2['default'])('div', { style: style3 }, [(0, _snabbdomH2['default'])('div', { style: { width: '65%', textAlign: 'left', marginLeft: 40, marginRight: '17%', fontSize: '20px' } }, [(0, _snabbdomH2['default'])('h1', { style: { textAlign: 'center', color: '#ffba66' } }, 'Websockets Monads'), (0, _snabbdomH2['default'])('span', 'This is the second page in the new Javascript Monads series. Detailed explanations of the basic monad constructor, "Monad" and its methods and the arguments they take can be found at '), (0, _snabbdomH2['default'])('a', { props: { href: 'http://schalk.net:4001' }, style: { color: '#EECCFF' } }, ' http://schalk.net:4001'), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk/fun-with-monads' }, style: { color: '#EECCFF' } }, ' github repo'), (0, _snabbdomH2['default'])('span', 'The original site, which was largely exploratory, is at: '), (0, _snabbdomH2['default'])('a', { props: { href: 'http://transcendent.ninja' }, style: { color: '#EECCFF' } }, ' http://transcendent.ninja'), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk/javascript-monads' }, style: { color: '#EECCFF' } }, ' repo'), (0, _snabbdomH2['default'])('span', '. The older site functions well, but it was bloated and unwieldy with React. I say "bloated" because I didn\'t need most of its core features. I didn\'t even use the state object and frequently called React.forceUpdate. Now I am at peace, using the '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/paldepind/snabbdom' }, style: { color: '#EECCFF' } }, ' snabbdom library. '), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('p'), (0, _snabbdomH2['default'])('h2', { style: { textAlign: 'center', color: '#ffba66' } }, 'MonadIter'), (0, _snabbdomH2['default'])('p', 'The basic monad is shown and demonstrated elsewhere. It is also in a script named "monad.js" in the "index.html" file, so you can experiment with the monads in the browser consol. Here is the other constructor in this project: '), _cowJs2['default'].monadIter, (0, _snabbdomH2['default'])('p', 'As a refresher, Click the next button to execute the indicated code, then click the mMI2.release() button four times.'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update4e, mouseleave: update4l, click: updateSteps }, style: style4 }, [_cowJs2['default'].steps]), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6 }, [_cowJs2['default'].next]), (0, _snabbdomH2['default'])('p', 'Now, a demonstration of monads handling websockets messages. In order to create a unique socket, please enter some name.'), (0, _snabbdomH2['default'])('input', { style: inputStyle1, on: { keydown: updateLogin } }), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update8e, mouseleave: update8l, click: updateNums }, props: { value: 0, id: '0' }, style: style8 }, m1[0]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update9e, mouseleave: update9l, click: updateNums }, props: { value: 1, id: '1' }, style: style9 }, m1[1]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update10e, mouseleave: update10l, click: updateNums }, props: { value: 2, id: '2' }, style: style10 }, m1[2]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update11e, mouseleave: update11l, click: updateNums }, props: { value: 3, id: '3' }, style: style11 }, m1[3]), (0, _snabbdomH2['default'])('p', ' '), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update12e, mouseleave: update12l, click: updateOp }, style: style12 }, m7[0]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update13e, mouseleave: update13l, click: updateOp }, style: style13 }, m7[1]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update14e, mouseleave: update14l, click: updateOp }, style: style14 }, m7[2]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update15e, mouseleave: update15l, click: updateOp }, style: style15 }, m7[3]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update16e, mouseleave: update16l, click: updateOp }, style: style16 }, m7[4]), (0, _snabbdomH2['default'])('p', '  '), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: style5 }, 'ROLL'), (0, _snabbdomH2['default'])('p', 'Now click ROLL. '), (0, _snabbdomH2['default'])('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. '), (0, _snabbdomH2['default'])('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. They are integral to the "Game of Score" application, in which players gain points by making the number "20". '), (0, _snabbdomH2['default'])('p', 'Every time you compute the number 20, mM13.x gets incremented by 1 and the mM14.x display on the right shows "<login_name>\'s score: <score>". As you can see in the click handlers below below, there are two chains for number clicks and two chains for operator clicks. In each case, the top chain is the execution path and the bottom chain uses boolean tests to control when the chain should compute a result and when the player should be given a point. Blocking and releasing is implemented with instances of MonadIter.'), (0, _snabbdomH2['default'])('p', 'I have written algorithms for such behavior in the past. Never before has the code been so concise and well organized. First I\'ll show the two click handlers; one for numbers and the other for operators. '), _cowJs2['default'].dice, (0, _snabbdomH2['default'])('p', 'When numbers are clicked, they get pushed into mM3.x, an initially empty array. When an operator is clicked, it replaces "0" as the value of mM8. So when mM3.x.length === 2 and mM8.x !== 0, it is time for the computation to go forward. '), (0, _snabbdomH2['default'])('p', 'mM1 hold the initial dice roll and the subsequent arrays of available numbers. When the last element in the mM1.x array (mMx.x[mM1.x.length -1] is "20", the player get an additional point and a new roll.'), (0, _snabbdomH2['default'])('p', 'My first "Game of Score" application ran on a Node.js server. The algorithm for the successive computations was a convoluted mess of callbacks between modules. Later, I re-made the application using a modified Haskell Wai-Websockets server with React in the browser. That was less of a mess, but there were plenty of calls to "React.setState" and the code wasn\'t real easy to follow. Using these monads, the main function calls are organized in one chain and timing decisions are organized in another. Once you get used to it, the code is very easy to follow. Identify the blocks in one chain and see when they are released in the other.'), (0, _snabbdomH2['default'])('p', 'The functions provided to bind are simple. They perform a task, and then return a monad so the chain can continue. Here is the code for the decision function "next": '), _cowJs2['default'].next, (0, _snabbdomH2['default'])('p', 'Using "bnd" with "next", any monad can release any block. '), (0, _snabbdomH2['default'])('span', 'In "Page 3" of this series, "Websockets-monads-II", I will embellish the dice roll algorithm with more feature. All of the code is available at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk' }, style: { color: '#EECCFF' } }, 'github.com/dschalk'), (0, _snabbdomH2['default'])('div', { style: { height: '300px' } })]), (0, _snabbdomH2['default'])('div', { style: { width: '30%', position: 'fixed', top: '40px', right: '15px', color: '#CCFDDA' } }, [(0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM1.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m1), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM2.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m2), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM3.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m3), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM4.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m4), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM5.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m5), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM6.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m6), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM7.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m7), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM8.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m8), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM9.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m9), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM10.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m10), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM11.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m11), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM12.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m12), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM13.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m13), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM14.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m14), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM15.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m15), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM16.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m16), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM17.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m17), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM18.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m18), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM19.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m19), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mMI1.x: '), (0, _snabbdomH2['default'])('span', { style: styleMI }, '  ' + mI1), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mMI2.x: '), (0, _snabbdomH2['default'])('span', { style: styleMI }, '  ' + mI2), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: updateRe, mouseleave: updateRl, click: updateR }, style: styleR }, 'REFRESH'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br')])]);
+  return (0, _snabbdomH2['default'])('div', { style: style3 }, [(0, _snabbdomH2['default'])('div', { style: { width: '65%', textAlign: 'left', marginLeft: 40, marginRight: '17%', fontSize: '20px' } }, [(0, _snabbdomH2['default'])('h1', { style: { textAlign: 'center', color: '#ffba66' } }, 'Websockets Monads'), (0, _snabbdomH2['default'])('span', 'This is the second page in the new Javascript Monads series. Detailed explanations of the basic monad constructor, "Monad" and its methods and the arguments they take can be found at '), (0, _snabbdomH2['default'])('a', { props: { href: 'http://schalk.net:4001' }, style: { color: '#EECCFF' } }, ' http://schalk.net:4001'), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk/fun-with-monads' }, style: { color: '#EECCFF' } }, ' github repo'), (0, _snabbdomH2['default'])('span', 'The original site, which was largely exploratory, is at: '), (0, _snabbdomH2['default'])('a', { props: { href: 'http://transcendent.ninja' }, style: { color: '#EECCFF' } }, ' http://transcendent.ninja'), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk/javascript-monads' }, style: { color: '#EECCFF' } }, ' repo'), (0, _snabbdomH2['default'])('span', '. The older site functions well, but it was bloated and unwieldy with React. I say "bloated" because I didn\'t need most of its core features. I didn\'t even use the state object and frequently called React.forceUpdate. Now I am at peace, using the '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/paldepind/snabbdom' }, style: { color: '#EECCFF' } }, ' snabbdom library. '), (0, _snabbdomH2['default'])('span', ' and a code repo at '), (0, _snabbdomH2['default'])('p'), (0, _snabbdomH2['default'])('h2', { style: { textAlign: 'center', color: '#ffba66' } }, 'MonadIter'), (0, _snabbdomH2['default'])('p', 'The basic monad is shown and demonstrated elsewhere. It is also in a script named "monad.js" in the "index.html" file, so you can experiment with the monads in the browser consol. Here is the other constructor in this project: '), _cowJs2['default'].monadIter, (0, _snabbdomH2['default'])('p', 'As a refresher, Click the next button to execute the indicated code, then click the mMI2.release() button four times.'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update4e, mouseleave: update4l, click: updateSteps }, style: style4 }, [_cowJs2['default'].steps]), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6 }, [_cowJs2['default'].next]), (0, _snabbdomH2['default'])('p', 'Now, a demonstration of monads handling websockets messages. In order to create a unique socket, please enter some name.'), (0, _snabbdomH2['default'])('input', { style: inputStyle1, on: { keydown: updateLogin } }), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update8e, mouseleave: update8l, click: updateNums }, props: { value: 0, id: '0' }, style: style8 }, m1[0]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update9e, mouseleave: update9l, click: updateNums }, props: { value: 1, id: '1' }, style: style9 }, m1[1]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update10e, mouseleave: update10l, click: updateNums }, props: { value: 2, id: '2' }, style: style10 }, m1[2]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update11e, mouseleave: update11l, click: updateNums }, props: { value: 3, id: '3' }, style: style11 }, m1[3]), (0, _snabbdomH2['default'])('p', ' '), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update12e, mouseleave: update12l, click: updateOp }, style: style12 }, m17[0]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update13e, mouseleave: update13l, click: updateOp }, style: style13 }, m17[1]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update14e, mouseleave: update14l, click: updateOp }, style: style14 }, m17[2]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update15e, mouseleave: update15l, click: updateOp }, style: style15 }, m17[3]), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update16e, mouseleave: update16l, click: updateOp }, style: style16 }, m17[4]), (0, _snabbdomH2['default'])('p', '  '), (0, _snabbdomH2['default'])('button', { on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: styleRoll }, 'ROLL'), (0, _snabbdomH2['default'])('p', { style: styleRoll }, 'Now click ROLL. '), (0, _snabbdomH2['default'])('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. '), (0, _snabbdomH2['default'])('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. '), (0, _snabbdomH2['default'])('p', 'Every time you compute the number 20, mM13.x (your score) gets incremented by 1. Every time you compute "18", your score increases by 3. Clicking numbers and operators calls updateNums and UpdateOps, respectively. They call updateCalc. updageCalc (below) clearly displays the algorithm. Certain conditions release certain MonadIter instances. If you look at "m.bnd(next, <condition>, <MonadIterator instance released if condition returns true>) and then scan down several lines to the specified MonadIter instance, you see what happens when the condition is met. "send" requests a new dice roll from the server. '), _cowJs2['default'].dice, (0, _snabbdomH2['default'])('p', 'When numbers are clicked, they get pushed into mM3.x, an initially empty array. When an operator is clicked, it replaces "0" as the value of mM8. So when mM3.x.length === 2 and mM8.x !== 0, it is time for the computation to go forward. '), (0, _snabbdomH2['default'])('p', 'mM1 holdd the initial dice roll and the subsequent arrays of available numbers. When calc returns "20", the player get an additional point and a new roll of the dice. If calc returns 18, you get three points. '), (0, _snabbdomH2['default'])('span', 'The functions provided to bind are simple. They perform a task, and then return a monad so the chain can continue. The method "fmap" takes ordinary functions and assigns the return value to the calling monad. m.fmap(f) assigns f(m.x) to m; m.fmap(() f((a,b,c)) assigns the return value of f(a,b,c) to m. In other words, m.x = f(a,b,c). That is how the return value of calc gets assigned to mM7. Here is the code for the decision function "next": '), _cowJs2['default'].next, (0, _snabbdomH2['default'])('span', 'And here is "send": '), _cowJs2['default'].send, (0, _snabbdomH2['default'])('p', 'Using "bnd" with "next", any monad can release any block. A chain in the tree (sorry about the mixed metaphore) can branch into 2, 3, or any number of chains you decide to place in a tupple. You wouldn\'t be required to do it, but it seems that any application could be organized into one tree. '), (0, _snabbdomH2['default'])('span', 'The code for this along with some other demonstrations can be found at '), (0, _snabbdomH2['default'])('a', { props: { href: 'https://github.com/dschalk?tab=repositories' }, style: { color: '#EECCFF' } }, 'github.com/dschalk/'), (0, _snabbdomH2['default'])('div', { style: { height: '300px' } })]), (0, _snabbdomH2['default'])('div', { style: { width: '30%', position: 'fixed', top: '40px', right: '15px', color: '#CCFDDA' } }, [(0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM1.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m1), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM2.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m2), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM3.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m3), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM4.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m4), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM5.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m5), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM6.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m6), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM7.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m7), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM8.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m8), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM9.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m9), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM10.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m10), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM11.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m11), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM12.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m12), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM13.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m13), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM14.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m14), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM15.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m15), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM16.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m16), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM17.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m17), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM18.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m18), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mM19.x: '), (0, _snabbdomH2['default'])('span', { style: styleM }, '  ' + m19), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mMI1.x: '), (0, _snabbdomH2['default'])('span', { style: styleMI }, '  ' + mI1), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('span', 'mMI2.x: '), (0, _snabbdomH2['default'])('span', { style: styleMI }, '  ' + mI2), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('button', { on: { mouseenter: updateRe, mouseleave: updateRl, click: updateR }, style: styleR }, 'REFRESH'), (0, _snabbdomH2['default'])('br'), (0, _snabbdomH2['default'])('br')])]);
 }
 
 var newVnode = function newVnode() {
@@ -95,75 +93,64 @@ function update0() {
   oldVnode = patch(oldVnode, newVnode());
 }
 
+function updateCalc() {
+  if (mM8.x === 0 || mM3.x.length !== 2) {
+    return;
+  };
+  mM19.bnd(function () {
+    return mM3.bnd(toFloat).bnd(function () {
+      return mM7.fmap(function () {
+        return calc(mM3.x[0], mM8.x, mM3.x[1]);
+      }).bnd(function () {
+        return mM1.bnd(push, mM7.x).bnd(clean).bnd(next, mM7.x == 18, mMI4).bnd(next, mM7.x == 20, mMI2);
+      }).bnd(displayOff, mM1.x.length).bnd(function () {
+        return mM3.ret([]).bnd(function () {
+          return mM4.ret(0).bnd(mM8.ret).bnd(function () {
+            return mM5.ret('Done').bnd(update);
+          });
+        });
+      });
+    }), mMI2.block().bnd(function () {
+      return mM13.ret(mM13.x + 1).bnd(function () {
+        return send();
+      });
+    }), mMI4.block().bnd(function () {
+      return mM13.ret(mM13.x + 3).bnd(function () {
+        return send();
+      });
+    });
+  });
+}
+
 function updateNums(e) {
+  console.log('updateNums entry ', mM8.x !== 0, mM3.x.length === 2);
   mM2.ret([e.target.value, e.target.textContent]).bnd(function () {
     return mM3;
   }).bnd(push, mM2.x[1]).bnd(function () {
     mM1.x[mM2.x[0]] = "";return mM5;
-  }).bnd(next, mM8.x !== 0 && mM3.x.length === 2, mMI1).bnd(next, mM1.x[mM1.x.length - 1] == 20, mMI2).bnd(update).bnd(function () {
-    return mMI1.block().bnd(function () {
-      return mM3.bnd(toFloat).bnd(function () {
-        return mM1.bnd(calc, mM3.x[0], mM8.x, mM3.x[1]).bnd(clean).bnd(displayOff, mM1.x.length).bnd(function () {
-          return mM3.ret([]).bnd(function () {
-            return mM4.ret(0).bnd(mM8.ret).bnd(function () {
-              return mM5.ret('Done').bnd(update);
-            });
-          });
-        });
-      }).bnd(function () {
-        return mMI2.block().bnd(function () {
-          return mM13.ret(mM13.x + 1).bnd(function () {
-            return send();
-          });
-        });
-      });
-    });
-  });
+  }).bnd(update);
+  updateCalc();
 }
 
 function updateOp(e) {
-  mM8.ret(e.target.textContent).bnd(function () {
-    return mM5.ret('Waiting').bnd(next, mM3.x.length == 2, mMI1).bnd(next, mM1.x[mM1.x.length - 1] == 20, mMI2).bnd(update).bnd(update).bnd(function () {
-      return mMI1;
-    }).block().bnd(function () {
-      return mM3.bnd(toFloat).bnd(function () {
-        return mM1.bnd(calc, mM3.x[0], mM8.x, mM3.x[1]).bnd(clean).bnd(displayOff, mM1.x.length).bnd(function () {
-          return mM3.ret([]).bnd(function () {
-            return mM4.ret(0).bnd(mM8.ret).bnd(function () {
-              return mM5.ret('Done').bnd(update);
-            });
-          });
-        });
-      }).bnd(function () {
-        return mMI2.block().bnd(function () {
-          return mM13.ret(mM13.x + 1).bnd(function () {
-            return send();
-          });
-        });
-      });
-    });
-  });
+  mM8.ret(e.target.textContent);
+  updateCalc();
 }
 
 function updateLogin(e) {
-
   var v = e.target.value;
   if (v == '') {
     return;
   }
   if (e.keyCode == 13) {
-    mM9.ret(v);
-    console.log("CC#$42" + v);
     socket.send("CC#$42" + v);
     LoginName = v;
-    console.log(LoginName);
     inputStyle1 = inputStyleB;
     update0();
   }
 }
 
 function updateR(event) {
-  console.log(socket.readyState);
   mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret).bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mMI1.ret).bnd(mMI2.ret);
   oldVnode = patch(oldVnode, newVnode());
 }
@@ -188,19 +175,16 @@ function updateSteps(event) {
       });
     });
   });
-  console.log(mM1.x, mM2.x);
   oldVnode = patch(oldVnode, newVnode());
 }
 
 function updateNext(event) {
   mMI2.release();
-  console.log(mM1.x, mM2.x);
   oldVnode = patch(oldVnode, newVnode());
 }
 
 function updateEvent(event) {
   mMI2.ret(event);
-  console.log(event);
   oldVnode = patch(oldVnode, newVnode());
 }
 
@@ -209,8 +193,6 @@ oldVnode = patch(oldVnode, newVnode());
 socket.onmessage = function (event) {
   console.log('cow', event);
   var gameArray = event.data.split(",");
-  console.log(event);
-  console.log(gameArray);
   var makeStr = function makeStr(x) {
     var l = x.length;
     var str = '';
@@ -245,7 +227,9 @@ socket.onmessage = function (event) {
           document.location.reload(false);
         }, 2000);
       } else {
+        styleRoll = style2;
         mM6.ret(sender + '\'s socket is now open');
+        // mM9.ret([
         update0();
       }
 
@@ -258,7 +242,7 @@ socket.onmessage = function (event) {
     case "CA#$42":
       // Triggedarkred by ROLL
       mM1.ret([extra, ext4, ext5, ext6]);
-      mM7.ret(['add', 'subtract', 'mult', 'div', 'concat']);
+      mM17.ret(['add', 'subtract', 'mult', 'div', 'concat']);
       mM3.ret([]);
       mM8.ret(0);
       mM6.bnd(displayInline, 1);
@@ -366,6 +350,8 @@ var style3 = { marginTop: '40px', backgroundColor: '#000', height: '100%', width
 var styleM = { color: '#FF000A', marginLeft: '13px', marginBottom: '2px', fontSize: '21px' };
 
 var styleMI = { color: '#FF000A', marginLeft: '7px', marginBottom: '2px', fontSize: '21px' };
+
+var styleRoll = { display: 'none' };
 
 var style0 = style2;
 

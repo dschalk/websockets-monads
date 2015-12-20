@@ -3,12 +3,10 @@ import snabbdom from 'snabbdom';
 import h from 'snabbdom/h';
 import cow from './cow.js';
 
-// const socket = new WebSocket("ws://schalk.net:4002");
-
 function createWebSocket(path) {
     let host = window.location.hostname;
     if(host == '') host = 'localhost';
-    let uri = 'ws://' + host + ':4002' + path;
+    let uri = 'ws://' + host + ':3093' + path;
 
     let Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
     return new Socket(uri);
@@ -79,35 +77,33 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
             m1[3]   ),
       h('p', ' ',  ),
       h('button', {on: { mouseenter: update12e, mouseleave: update12l, click: updateOp }, style: style12},
-            m7[0]   ),
+            m17[0]   ),
       h('button', {on: { mouseenter: update13e, mouseleave: update13l, click: updateOp }, style: style13},
-            m7[1]   ),
+            m17[1]   ),
       h('button', {on: { mouseenter: update14e, mouseleave: update14l, click: updateOp }, style: style14},
-            m7[2]   ),
+            m17[2]   ),
       h('button', {on: { mouseenter: update15e, mouseleave: update15l, click: updateOp }, style: style15},
-            m7[3]   ),
+            m17[3]   ),
       h('button', {on: { mouseenter: update16e, mouseleave: update16l, click: updateOp }, style: style16},
-            m7[4]   ),
+            m17[4]   ),
       h('p', '  '  ),
 
-          h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: style5},
+      h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: styleRoll},
                      `ROLL`   ),
-
-
-      h('p', 'Now click ROLL. '  ),
+      h('p', {style: styleRoll}, 'Now click ROLL. '  ),
       h('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. ',  ),
-      h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. They are integral to the "Game of Score" application, in which players gain points by making the number "20". '  ),
-      h('p', 'Every time you compute the number 20, mM13.x gets incremented by 1 and the mM14.x display on the right shows "<login_name>\'s score: <score>". As you can see in the click handlers below below, there are two chains for number clicks and two chains for operator clicks. In each case, the top chain is the execution path and the bottom chain uses boolean tests to control when the chain should compute a result and when the player should be given a point. Blocking and releasing is implemented with instances of MonadIter.'  ),
-      h('p', 'I have written algorithms for such behavior in the past. Never before has the code been so concise and well organized. First I\'ll show the two click handlers; one for numbers and the other for operators. '    ),
+      h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. '  ),
+      h('p', 'Every time you compute the number 20, mM13.x (your score) gets incremented by 1. Every time you compute "18", your score increases by 3. Clicking numbers and operators calls updateNums and UpdateOps, respectively. They call updateCalc. updageCalc (below) clearly displays the algorithm. Certain conditions release certain MonadIter instances. If you look at "m.bnd(next, <condition>, <MonadIterator instance released if condition returns true>) and then scan down several lines to the specified MonadIter instance, you see what happens when the condition is met. "send" requests a new dice roll from the server. ' ),
       cow.dice,
       h('p', 'When numbers are clicked, they get pushed into mM3.x, an initially empty array. When an operator is clicked, it replaces "0" as the value of mM8. So when mM3.x.length === 2 and mM8.x !== 0, it is time for the computation to go forward. '  ),
-      h('p', 'mM1 hold the initial dice roll and the subsequent arrays of available numbers. When the last element in the mM1.x array (mMx.x[mM1.x.length -1] is "20", the player get an additional point and a new roll.'   ), 
-      h('p', 'My first "Game of Score" application ran on a Node.js server. The algorithm for the successive computations was a convoluted mess of callbacks between modules. Later, I re-made the application using a modified Haskell Wai-Websockets server with React in the browser. That was less of a mess, but there were plenty of calls to "React.setState" and the code wasn\'t real easy to follow. Using these monads, the main function calls are organized in one chain and timing decisions are organized in another. Once you get used to it, the code is very easy to follow. Identify the blocks in one chain and see when they are released in the other.'  ),
-      h('p', 'The functions provided to bind are simple. They perform a task, and then return a monad so the chain can continue. Here is the code for the decision function "next": '    ),
+      h('p', 'mM1 holdd the initial dice roll and the subsequent arrays of available numbers. When calc returns "20", the player get an additional point and a new roll of the dice. If calc returns 18, you get three points. '   ), 
+      h('span', 'The functions provided to bind are simple. They perform a task, and then return a monad so the chain can continue. The method "fmap" takes ordinary functions and assigns the return value to the calling monad. m.fmap(f) assigns f(m.x) to m; m.fmap(() f((a,b,c)) assigns the return value of f(a,b,c) to m. In other words, m.x = f(a,b,c). That is how the return value of calc gets assigned to mM7. Here is the code for the decision function "next": '    ),
       cow.next,
-      h('p', 'Using "bnd" with "next", any monad can release any block. '    ),
-      h('span', 'In "Page 3" of this series, "Websockets-monads-II", I will embellish the dice roll algorithm with more feature. All of the code is available at '   ),
-      h('a', {props: {href: 'https://github.com/dschalk'}, style: {color: '#EECCFF'}}, 'github.com/dschalk'  ),
+      h('span', 'And here is "send": '  ),
+      cow.send,
+      h('p', 'Using "bnd" with "next", any monad can release any block. A chain in the tree (sorry about the mixed metaphore) can branch into 2, 3, or any number of chains you decide to place in a tupple. You wouldn\'t be required to do it, but it seems that any application could be organized into one tree. '  ),
+      h('span', 'The code for this along with some other demonstrations can be found at ' ),
+      h('a', {props: {href: 'https://github.com/dschalk?tab=repositories'}, style: {color: '#EECCFF'}}, 'github.com/dschalk/' ),
       h('div', {style: {height: '300px'}} ),
         ] ), 
       h ('div',{style: { width: '30%', position: 'fixed', top: '40px', right: '15px', color: '#CCFDDA'}},
@@ -197,77 +193,64 @@ function update0() {
   oldVnode = patch(oldVnode, newVnode());
 }
 
+function updateCalc() {  
+  if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};
+  mM19.bnd(() => (
+       (mM3
+                    .bnd(toFloat)
+                    .bnd(() => mM7
+                    .fmap(() => {return calc(mM3.x[0], mM8.x, mM3.x[1])})
+                    .bnd(() => mM1.bnd(push, mM7.x)
+                    .bnd(clean)
+                    .bnd(next, (mM7.x == 18), mMI4)
+                    .bnd(next, (mM7.x == 20), mMI2) )
+                    .bnd(displayOff, mM1.x.length)
+                    .bnd(() => mM3
+                    .ret([])
+                    .bnd(() => mM4
+                    .ret(0).bnd(mM8.ret)
+                    .bnd(() => mM5.ret('Done')
+                    .bnd(update)   )))) ),
+      ( mMI2.block()
+                    .bnd(() => mM13
+                    .ret(mM13.x + 1)
+                    .bnd(() => send())) ),
+      ( mMI4.block()
+                    .bnd(() => mM13
+                    .ret(mM13.x + 3)
+                    .bnd(() => send())) )
+  )) 
+}
+
 function updateNums(e) {
+  console.log('updateNums entry ', mM8.x !== 0, mM3.x.length === 2)
   mM2.ret([e.target.value, e.target.textContent]) 
   .bnd(() => mM3)
   .bnd(push,mM2.x[1])
   .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})
-  .bnd(next,(mM8.x !== 0 && mM3.x.length === 2), mMI1)
-  .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
   .bnd(update)
-  .bnd(() => mMI1
-      .block()
-      .bnd(() => mM3
-      .bnd(toFloat)
-      .bnd(() => mM1
-      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
-      .bnd(clean)
-      .bnd(displayOff, mM1.x.length)
-      .bnd(() => mM3
-      .ret([])
-      .bnd(() => mM4
-      .ret(0).bnd(mM8.ret)
-      .bnd(() => mM5.ret('Done')
-      .bnd(update)   )) ))  
-      .bnd(() => mMI2
-          .block()
-          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
+  updateCalc();
 }
 
 function updateOp(e) {
-  mM8.ret(e.target.textContent)
-  .bnd(() => mM5.ret('Waiting')
-  .bnd(next, (mM3.x.length == 2),  mMI1)
-  .bnd(next, (mM1.x[mM1.x.length - 1] == 20), mMI2)
-  .bnd(update) 
-  .bnd(update)
-  .bnd(() => mMI1)
-      .block()
-      .bnd(() => mM3
-      .bnd(toFloat)
-      .bnd(() => mM1
-      .bnd(calc,mM3.x[0], mM8.x, mM3.x[1])
-      .bnd(clean)
-      .bnd(displayOff, mM1.x.length)
-      .bnd(() => mM3
-      .ret([])
-      .bnd(() => mM4
-      .ret(0).bnd(mM8.ret)
-      .bnd(() => mM5.ret('Done')
-      .bnd(update)   )) )) 
-          .bnd(() => mMI2.block()
-          .bnd(() => mM13.ret(mM13.x + 1).bnd(() => send())))))
+  mM8.ret(e.target.textContent);
+  updateCalc();
 }
 
 function updateLogin(e) {
-
      let v = e.target.value;
      if (v == '' ) {
        return;
      } 
      if( e.keyCode == 13 ) {
-       mM9.ret(v);
-       console.log("CC#$42" + v);
        socket.send("CC#$42" + v);
        LoginName = v;
-       console.log(LoginName);
        inputStyle1 = inputStyleB;
        update0();
      }
 }
 
 function updateR(event) {
-  console.log(socket.readyState);
   mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret)
   .bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mMI1.ret).bnd(mMI2.ret);  
   oldVnode = patch(oldVnode, newVnode());
@@ -286,19 +269,16 @@ function updateSteps(event) {
      .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
      .bnd(mM4.ret)
       ))))))))) 
-  console.log(mM1.x, mM2.x);
   oldVnode = patch(oldVnode, newVnode());
 }
 
 function updateNext(event) {
   mMI2.release()  
-  console.log(mM1.x, mM2.x);
   oldVnode = patch(oldVnode, newVnode());
 }
 
 function updateEvent(event) {
   mMI2.ret(event);
-  console.log(event);
   oldVnode = patch(oldVnode, newVnode());
 }
 
@@ -307,8 +287,6 @@ oldVnode = patch(oldVnode, newVnode());
 socket.onmessage = function(event) {
   console.log('cow', event);
   let gameArray = event.data.split(",");
-  console.log(event);
-  console.log(gameArray);
   let makeStr = x => {
     let l = x.length;
     let str = '';
@@ -343,7 +321,9 @@ socket.onmessage = function(event) {
               },2000);
             }
             else {
+              styleRoll = style2;
               mM6.ret(sender + '\'s socket is now open');
+              // mM9.ret([
               update0();
             }
       
@@ -354,7 +334,7 @@ socket.onmessage = function(event) {
           
           case "CA#$42":                             // Triggedarkred by ROLL
               mM1.ret([extra,  ext4,  ext5,  ext6]);
-              mM7.ret(['add', 'subtract', 'mult', 'div', 'concat']); 
+              mM17.ret(['add', 'subtract', 'mult', 'div', 'concat']); 
               mM3.ret([]);
               mM8.ret(0);
               mM6.bnd(displayInline,1);
@@ -452,6 +432,8 @@ var style3 = { marginTop: '40px', backgroundColor: '#000', height: '100%' , widt
 var styleM = {color: '#FF000A', marginLeft: '13px', marginBottom: '2px', fontSize: '21px' };
 
 var styleMI = {color: '#FF000A', marginLeft: '7px', marginBottom: '2px', fontSize: '21px' };
+
+var styleRoll = {display: 'none'};
 
 var style0 = style2;
 
