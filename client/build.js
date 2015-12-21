@@ -21,7 +21,7 @@ var monadIter = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' }
 
 var steps = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)\n     .bnd(() => mM1\n     .ret(\'Click mMI2.release() to proceed\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM2\n     .ret(\'Click it again.\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM3.ret(\'Keep going\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM4\n     .ret(\'One more\')\n     .bnd(refresh)\n     .bnd(() => mMI2\n         .block()\n     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)\n     .bnd(mM4.ret).bnd(refresh)\n      ))))))))) ');
 
-var dice = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '  function updateNums(e) {\n    mM2.ret([e.target.value, e.target.textContent]) \n    .bnd(() => mM3)\n    .bnd(push,mM2.x[1])\n    .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})\n    .bnd(update)\n    updateCalc();\n  }\n  \n  function updateOp(e) {\n    mM8.ret(e.target.textContent);\n    updateCalc();\n  }  \n\n  function updateCalc() {  \n    if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};\n    mM19.bnd(() => (\n    (mM3\n      .bnd(toFloat)\n      .bnd(() => mM7\n      .fmap(() => {return calc(mM3.x[0], mM8.x, mM3.x[1])})\n      .bnd(() => mM1.bnd(push, mM7.x)\n      .bnd(clean)\n      .bnd(next, (mM7.x == 18), mMI4)\n      .bnd(next, (mM7.x == 20), mMI2) )\n      .bnd(displayOff, mM1.x.length)\n      .bnd(() => mM3\n      .ret([])\n      .bnd(() => mM4\n      .ret(0).bnd(mM8.ret)\n      .bnd(() => mM5.ret(\'Done\')\n      .bnd(update)   )))) ),\n    (mMI2.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 1)\n      .bnd(() => send())) ),\n    (mMI4.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 3)\n      .bnd(() => send())) )  \n    )) \n  }\n  \n);  \n\nconst next = h(\'pre\', {style: {color: \'#AFEEEE\' }}, \n    var next = function next(x,mon,bool,mon2) {  \n      if (bool) {\n        mon2.release();\n      }\n      return mon\n    }  ');
+var dice = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '  function updateNums(e) {\n    mM2.ret([e.target.value, e.target.textContent]) \n    .bnd(() => mM3)\n    .bnd(push,mM2.x[1])\n    .bnd(() => {mM1.x[mM2.x[0]] = ""; return mM5;})\n    .bnd(update)\n    updateCalc();\n  }\n  \n  function updateOp(e) {\n    mM8.ret(e.target.textContent);\n    updateCalc();\n  }  \n\n  function updateCalc() {  \n    if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};\n    mM19.bnd(() => (\n    (mMI2.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 1)\n      .bnd(() => send())) ),\n    (mMI4.block()\n      .bnd(() => mM13\n      .ret(mM13.x + 3)\n      .bnd(() => send())) ),  \n    (mM3\n      .bnd(toFloat)\n      .bnd(() => mM7\n      .fmap(() => {return calc(mM3.x[0], mM8.x, mM3.x[1])})\n      .bnd(() => mM1.bnd(push, mM7.x)\n      .bnd(clean)\n      .bnd(next, (mM7.x == 18), mMI4)\n      .bnd(next, (mM7.x == 20), mMI2) )\n      .bnd(displayOff, mM1.x.length)\n      .bnd(() => mM3\n      .ret([])\n      .bnd(() => mM4\n      .ret(0).bnd(mM8.ret)\n      .bnd(() => mM5.ret(\'Done\')\n      .bnd(update)   )))) )\n    )) \n  }\n  \n);  \n\nconst next = h(\'pre\', {style: {color: \'#AFEEEE\' }}, \n    var next = function next(x,mon,bool,mon2) {  \n      if (bool) {\n        mon2.release();\n      }\n      return mon\n    }  ');
 
 var send = (0, _snabbdomH2['default'])('pre', { style: { color: '#AFEEEE' } }, '    var send = function(event) {\n        socket.send("CA#$42,solo," + LoginName +",6,6,12,20");\n    };');
 
@@ -98,18 +98,21 @@ function update0() {
 }
 
 function updateCalc() {
-  console.log('updateCalc: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
   if (mM8.x === 0 || mM3.x.length !== 2) {
     return;
   };
   mM19.bnd(function () {
     return mMI2.block().bnd(function () {
-      return mM13.ret(mM13.x + 1).bnd(log, ('mM13.x ', mM13.x)).bnd(function () {
-        return send();
+      return mM14.ret('Score: ' + (mM13.x + 1)).bnd(function () {
+        return mM13.ret(mM13.x + 1).bnd(function () {
+          return send();
+        });
       });
     }), mMI4.block().bnd(function () {
-      return mM13.ret(mM13.x + 3).bnd(log, ('mM13.x ', mM13.x)).bnd(function () {
-        return send();
+      return mM14.ret('Score: ' + (mM13.x + 3)).bnd(function () {
+        return mM13.ret(mM13.x + 3).bnd(function () {
+          return send();
+        });
       });
     }), mM3.bnd(toFloat).bnd(function () {
       return mM7.fmap(function () {
@@ -128,8 +131,6 @@ function updateCalc() {
 }
 
 function updateNums(e) {
-  console.log('updateNums: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
-  console.log('updateNums entry ', mM8.x !== 0, mM3.x.length === 2);
   mM2.ret([e.target.value, e.target.textContent]).bnd(function () {
     return mM3;
   }).bnd(push, mM2.x[1]).bnd(function () {
@@ -154,18 +155,15 @@ function updateLogin(e) {
     LoginName = v;
     inputStyle1 = inputStyleB;
     mM3.ret([]).bnd(mM2.ret);
-    send();
-    mM8.ret('mult');
-    updateNums({ target: { value: 0, textContent: 3 } });
-    updateCalc();
-    console.log('mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
     update0();
   }
 }
 
 function updateR(event) {
-  mM2.ret(0).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret).bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mM9.ret).bnd(mM10.ret).bnd(mM11.ret).bnd(mM12.ret).bnd(mM13.ret).bnd(mM14.ret).bnd(mM15.ret).bnd(mM16.ret).bnd(mM17.ret).bnd(mM18.ret).bnd(mM19.ret).bnd(mMI1.ret).bnd(mMI2.ret).bnd(function () {
+  mM2.ret(0).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret).bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mM9.ret).bnd(mM10.ret).bnd(mM11.ret).bnd(mM12.ret).bnd(mM13.ret).bnd(mM15.ret).bnd(mM16.ret).bnd(mM17.ret).bnd(mM18.ret).bnd(mM19.ret).bnd(mMI1.ret).bnd(mMI2.ret).bnd(function () {
     return mM1.ret([]);
+  }).bnd(function () {
+    return mM14.ret('Score: ' + mM13.x);
   });
   oldVnode = patch(oldVnode, newVnode());
 }

@@ -106,6 +106,14 @@ const dice = h('pre', {style: {color: '#AFEEEE' }},
   function updateCalc() {  
     if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};
     mM19.bnd(() => (
+    (mMI2.block()
+      .bnd(() => mM13
+      .ret(mM13.x + 1)
+      .bnd(() => send())) ),
+    (mMI4.block()
+      .bnd(() => mM13
+      .ret(mM13.x + 3)
+      .bnd(() => send())) ),  
     (mM3
       .bnd(toFloat)
       .bnd(() => mM7
@@ -120,15 +128,7 @@ const dice = h('pre', {style: {color: '#AFEEEE' }},
       .bnd(() => mM4
       .ret(0).bnd(mM8.ret)
       .bnd(() => mM5.ret('Done')
-      .bnd(update)   )))) ),
-    (mMI2.block()
-      .bnd(() => mM13
-      .ret(mM13.x + 1)
-      .bnd(() => send())) ),
-    (mMI4.block()
-      .bnd(() => mM13
-      .ret(mM13.x + 3)
-      .bnd(() => send())) )  
+      .bnd(update)   )))) )
     )) 
   }
   

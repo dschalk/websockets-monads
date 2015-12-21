@@ -193,19 +193,20 @@ function update0() {
 }
 
 function updateCalc() {  
-       console.log('updateCalc: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
   if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};
   mM19.bnd(() => (
       ( mMI2.block()
+                    .bnd(() => mM14
+                    .ret('Score: ' + (mM13.x + 1))
                     .bnd(() => mM13
                     .ret(mM13.x + 1)
-                    .bnd(log, ('mM13.x ', mM13.x))
-                    .bnd(() => send())) ),
+                    .bnd(() => send()))) ),
       ( mMI4.block()
+                    .bnd(() => mM14
+                    .ret('Score: ' + (mM13.x + 3))
                     .bnd(() => mM13
                     .ret(mM13.x + 3)
-                    .bnd(log, ('mM13.x ', mM13.x))
-                    .bnd(() => send())) ),
+                    .bnd(() => send()))) ),
        (mM3
                     .bnd(toFloat)
                     .bnd(() => mM7
@@ -225,8 +226,6 @@ function updateCalc() {
 }
 
 function updateNums(e) {
-       console.log('updateNums: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
-  console.log('updateNums entry ', mM8.x !== 0, mM3.x.length === 2)
   mM2.ret([e.target.value, e.target.textContent]) 
   .bnd(() => mM3)
   .bnd(push,mM2.x[1])
@@ -251,18 +250,13 @@ function updateLogin(e) {
        LoginName = v;
        inputStyle1 = inputStyleB;
        mM3.ret([]).bnd(mM2.ret);
-       send();
-       mM8.ret('mult');
-       updateNums({ target: {value: 0, textContent: 3 }});
-       updateCalc();
-       console.log('mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
        update0();
      }
 }
 
 function updateR(event) {
   mM2.ret(0).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret)
-  .bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mM9.ret).bnd(mM10.ret).bnd(mM11.ret).bnd(mM12.ret).bnd(mM13.ret).bnd(mM14.ret).bnd(mM15.ret).bnd(mM16.ret).bnd(mM17.ret).bnd(mM18.ret).bnd(mM19.ret).bnd(mMI1.ret).bnd(mMI2.ret).bnd(() => mM1.ret([]));
+  .bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mM9.ret).bnd(mM10.ret).bnd(mM11.ret).bnd(mM12.ret).bnd(mM13.ret).bnd(mM15.ret).bnd(mM16.ret).bnd(mM17.ret).bnd(mM18.ret).bnd(mM19.ret).bnd(mMI1.ret).bnd(mMI2.ret).bnd(() => mM1.ret([])).bnd(() => mM14.ret('Score: ' + mM13.x));
   oldVnode = patch(oldVnode, newVnode());
 }
 
