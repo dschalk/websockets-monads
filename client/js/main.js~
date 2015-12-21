@@ -6,7 +6,7 @@ import cow from './cow.js';
 function createWebSocket(path) {
     let host = window.location.hostname;
     if(host == '') host = 'localhost';
-    let uri = 'ws://' + host + ':3093' + path;
+    let uri = 'ws://' + host + ':4002' + path;
 
     let Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
     return new Socket(uri);
@@ -58,13 +58,12 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
       h('h2', {style: {textAlign: 'center', color: '#ffba66'}}, 'MonadIter' ),
       h('p', 'The basic monad is shown and demonstrated elsewhere. It is also in a script named "monad.js" in the "index.html" file, so you can experiment with the monads in the browser consol. Here is the other constructor in this project: '  ),
       cow.monadIter,
-      h('p', 'As a refresher, Click the next button to execute the indicated code, then click the mMI2.release() button four times.'  ),
+      h('p', 'As a refresher, Click the next button to execute the indicated code, then click the mMI2.release() button "NEXT" four times.'  ),
       h('button', {on: { mouseenter: update4e, mouseleave: update4l, click: updateSteps }, style: style4},
             [ cow.steps ],  ),
       h('br', ),    
       h('br', ),    
-      h('button', {on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6},
-            [ cow.next ],   ),
+      h('button', {on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6}, 'NEXT'  ),  
       h('p', 'Now, a demonstration of monads handling websockets messages. In order to create a unique socket, please enter some name.'  ),
       h('input', {style: inputStyle1, on: {keydown: updateLogin},  } ),
       h('button', {on: { mouseenter: update8e, mouseleave: update8l, click: updateNums }, props: {value: 0, id: '0'}, style: style8},
@@ -88,9 +87,9 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
             m17[4]   ),
       h('p', '  '  ),
 
-      h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: send }, style: styleRoll},
+      h('button', {on: { mouseenter: update5e, mouseleave: update5l, click: function() {styleRoll2 = {display: 'none'}; send()} }, style: styleRoll},
                      `ROLL`   ),
-      h('p', {style: styleRoll}, 'Now click ROLL. '  ),
+      h('p', {style: styleRoll2}, 'Now click ROLL. '  ),
       h('p', 'When you click a number, it disappears. After two numbers and an operator have been selected, in any order, a computation is performed and the result is placed at the end of the numbers row. Now there are three numbers. After another round, two are left and finally, the last computation can be performed. ',  ),
       h('p', 'You can click ROLL repeatedly and the Haskell server will obligingly provide new numbers. The numbers simulate the roll of four dice; two six-sided, one twelve-sided, and one twenty-sided. '  ),
       h('p', 'Every time you compute the number 20, mM13.x (your score) gets incremented by 1. Every time you compute "18", your score increases by 3. Clicking numbers and operators calls updateNums and UpdateOps, respectively. They call updateCalc. updageCalc (below) clearly displays the algorithm. Certain conditions release certain MonadIter instances. If you look at "m.bnd(next, <condition>, <MonadIterator instance released if condition returns true>) and then scan down several lines to the specified MonadIter instance, you see what happens when the condition is met. "send" requests a new dice roll from the server. ' ),
@@ -194,6 +193,7 @@ function update0() {
 }
 
 function updateCalc() {  
+       console.log('updateCalc: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
   if ((mM8.x === 0) || (mM3.x.length !== 2)) {return};
   mM19.bnd(() => (
        (mM3
@@ -203,26 +203,29 @@ function updateCalc() {
                     .bnd(() => mM1.bnd(push, mM7.x)
                     .bnd(clean)
                     .bnd(next, (mM7.x == 18), mMI4)
-                    .bnd(next, (mM7.x == 20), mMI2) )
+                    .bnd(next, (mM7.x == 20), mMI2) 
                     .bnd(displayOff, mM1.x.length)
                     .bnd(() => mM3
                     .ret([])
                     .bnd(() => mM4
                     .ret(0).bnd(mM8.ret)
                     .bnd(() => mM5.ret('Done')
-                    .bnd(update)   )))) ),
+                    .bnd(update)   ))))) ),
       ( mMI2.block()
                     .bnd(() => mM13
                     .ret(mM13.x + 1)
+                    .bnd(log, ('mM13.x ', mM13.x))
                     .bnd(() => send())) ),
       ( mMI4.block()
                     .bnd(() => mM13
                     .ret(mM13.x + 3)
+                    .bnd(log, ('mM13.x ', mM13.x))
                     .bnd(() => send())) )
   )) 
 }
 
 function updateNums(e) {
+       console.log('updateNums: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
   console.log('updateNums entry ', mM8.x !== 0, mM3.x.length === 2)
   mM2.ret([e.target.value, e.target.textContent]) 
   .bnd(() => mM3)
@@ -233,6 +236,7 @@ function updateNums(e) {
 }
 
 function updateOp(e) {
+       console.log('updateOp: mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
   mM8.ret(e.target.textContent);
   updateCalc();
 }
@@ -246,13 +250,19 @@ function updateLogin(e) {
        socket.send("CC#$42" + v);
        LoginName = v;
        inputStyle1 = inputStyleB;
+       mM3.ret([]).bnd(mM2.ret);
+       send();
+       mM8.ret('mult');
+       updateNums({ target: {value: 0, textContent: 3 }});
+       updateCalc();
+       console.log('mMI1.p, mMI2.p, mMI4.p ', mMI1.p, mMI2.p, mMI4.p);
        update0();
      }
 }
 
 function updateR(event) {
-  mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret)
-  .bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mMI1.ret).bnd(mMI2.ret);  
+  mM2.ret(0).bnd(mM3.ret).bnd(mM4.ret).bnd(mM5.ret)
+  .bnd(mM6.ret).bnd(mM7.ret).bnd(mM8.ret).bnd(mM9.ret).bnd(mM10.ret).bnd(mM11.ret).bnd(mM12.ret).bnd(mM13.ret).bnd(mM14.ret).bnd(mM15.ret).bnd(mM16.ret).bnd(mM17.ret).bnd(mM18.ret).bnd(mM19.ret).bnd(mMI1.ret).bnd(mMI2.ret).bnd(() => mM1.ret([]));
   oldVnode = patch(oldVnode, newVnode());
 }
 
@@ -322,7 +332,9 @@ socket.onmessage = function(event) {
             }
             else {
               styleRoll = style2;
+              styleRoll2 = style2;
               mM6.ret(sender + '\'s socket is now open');
+              updateCalc();
               // mM9.ret([
               update0();
             }
@@ -340,9 +352,9 @@ socket.onmessage = function(event) {
               mM6.bnd(displayInline,1);
               mM6.bnd(displayInline,2);
               mM6.bnd(displayInline,3);
-              var senderScore = sender + "\u2019s score: " + mM13.x;
-
-              mM14.ret(senderScore);
+              updateCalc();
+              // var senderScore = sender + "\u2019s score: " + mM13.x;
+              // mM14.ret(senderScore);
               update0();
           break;
 
@@ -434,6 +446,7 @@ var styleM = {color: '#FF000A', marginLeft: '13px', marginBottom: '2px', fontSiz
 var styleMI = {color: '#FF000A', marginLeft: '7px', marginBottom: '2px', fontSize: '21px' };
 
 var styleRoll = {display: 'none'};
+var styleRoll2 = {display: 'none'};
 
 var style0 = style2;
 

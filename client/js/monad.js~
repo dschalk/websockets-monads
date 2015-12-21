@@ -159,7 +159,7 @@ var M = function M(a) {
   return new Monad(a);
 };
 
-var mM1 = M(0);
+var mM1 = M([]);
 var mM2 = M(0);
 var mM3 = M(0);
 var mM4 = M(0);
@@ -195,7 +195,7 @@ var toNums = function toNums(x,mon) {
   return mon; 
 }
 
-var calc = function calc(x,mon,a,op,b) { 
+var calc = function calc(a,op,b) { 
   var result;
   switch (op) {
       case "add": result = (a + b);
@@ -204,19 +204,13 @@ var calc = function calc(x,mon,a,op,b) {
       break;
       case "mult": result = (a * b);
       break;
-      case "div": mon.x.push( (a) / (b));
+      case "div": result = (a / b);
       break;
       case "concat": result = (a+""+b)*1.0;
       break;
       default : 'Major Malfunction in calc.';
   }
-  mM1.bnd(push, result)
-  .bnd(clean)
-  .bnd(() => mM7
-  .ret(result)
-  .bnd(next, (result == 18), mMI4)
-  .bnd(next, (result == 20), mMI2) )
-  return mon;
+  return result;
 }
 
 var push = function push(a,mon,v) {
@@ -308,6 +302,7 @@ var mult = function mult(x, mon, y) {
 var lg = '';
 
 var log = function log(x, mon, y) {
+  console.log(y);
   return mon;
 };
 

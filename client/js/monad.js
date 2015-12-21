@@ -159,7 +159,7 @@ var M = function M(a) {
   return new Monad(a);
 };
 
-var mM1 = M(0);
+var mM1 = M([]);
 var mM2 = M(0);
 var mM3 = M(0);
 var mM4 = M(0);
@@ -204,7 +204,7 @@ var calc = function calc(a,op,b) {
       break;
       case "mult": result = (a * b);
       break;
-      case "div": mon.x.push( (a) / (b));
+      case "div": result = (a / b);
       break;
       case "concat": result = (a+""+b)*1.0;
       break;
@@ -302,6 +302,7 @@ var mult = function mult(x, mon, y) {
 var lg = '';
 
 var log = function log(x, mon, y) {
+  console.log(y);
   return mon;
 };
 
