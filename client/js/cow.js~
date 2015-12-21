@@ -134,12 +134,11 @@ const dice = h('pre', {style: {color: '#AFEEEE' }},
   
 );  
 
-const next = h('pre', {style: {color: '#AFEEEE' }}, 
-    var next = function next(x,mon,bool,mon2) {  
-      if (bool) {
-        mon2.release();
-      }
-      return mon
+  var next = function next(x,mon,bool,mon2) {  
+    if (bool) {
+      mon2.release();
+    }
+    return mon
     }  `
 );  
 
