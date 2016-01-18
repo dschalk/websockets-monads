@@ -1,7 +1,9 @@
 import snabbdom from 'snabbdom';
 import h from 'snabbdom/h';
 
-const monad = h('pre', {style: {color: '#AFEEEE' }}, `  class Monad {
+const monad = h('pre', {style: {color: '#AFEEEE' }}, 
+`
+  class Monad {
     constructor(z) {
 
       this.x = z;
@@ -21,10 +23,8 @@ const monad = h('pre', {style: {color: '#AFEEEE' }}, `  class Monad {
 
       };
     }
-  };
-` );  
+  }; 
   
-const monadIter = h('pre', {style: {color: '#AFEEEE' }}, `  
   class MonadIter {
     constructor(z,g) {
 
@@ -101,29 +101,20 @@ const monadIter = h('pre', {style: {color: '#AFEEEE' }}, `
 ` );  
 
 const steps = h('pre', {style: {color: '#AFEEEE' }}, 
-`    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
-     .bnd(() => mM1
-     .ret('Click mMI2.release() to proceed')
-     .bnd(refresh)
-     .bnd(() => mMI2
-         .block()
-     .bnd(() => mM2
-     .ret('Click it again.')
-     .bnd(refresh)
-     .bnd(() => mMI2
-         .block()
+`    mM1.ret(0).bnd(x => mM2.ret(x.x).bnd(() => mM3.ret(0)
+     .bnd(x => mM4.ret(x.x)
+     .bnd(() => mM1.ret('Click the mMI2.release() button to proceed')
+     .bnd(() => mMI2.block()
+     .bnd(() => mM2.ret('Click it again.')
+     .bnd(() => mMI2.block()
      .bnd(() => mM3.ret('Keep going')
-     .bnd(refresh)
-     .bnd(() => mMI2
-         .block()
-     .bnd(() => mM4
-     .ret('One more')
-     .bnd(refresh)
-     .bnd(() => mMI2
-         .block()
-     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
-     .bnd(mM4.ret).bnd(refresh)
-      ))))))))) `
+     .bnd(() => mMI2.block()
+     .bnd(() => mM4.ret('One more')
+     .bnd(() => mMI2.block()
+     .bnd(() => mM1.ret(0).bnd(x => mM2.ret(x.x).bnd(() => mM3.ret(0)
+     .bnd(() => mM4.ret(0))
+      ))))))))))))));
+`
  );  
 
 const dice = h('pre', {style: {color: '#AFEEEE' }}, 
@@ -199,7 +190,7 @@ const nex = h('pre', {style: {color: '#AFEEEE' }},
 
 
 
-export default {monad, monadIter, steps, next, dice, send};
+export default {monad, steps, next, dice, send};
 
 
 

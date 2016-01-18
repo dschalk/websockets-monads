@@ -44,26 +44,18 @@ function view(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, 
     [  h('div',{style: { width: '65%', textAlign: 'left', marginLeft: 40, marginRight: '17%', fontSize: '20px'}}, 
     [ h('h1', {style: {textAlign: 'center', color: '#ffba66'}}, 'Websockets Monads'),
       h('span', 'This is the second page in the new Javascript Monads series. Detailed explanations of the basic monad constructor, "Monad" and its methods and the arguments they take can be found at '),
-      h('a', {props: {href: 'http://schalk.net:4001' },  style: {color: '#EECCFF'}},' http://schalk.net:4001'), 
+      h('a', {props: {href: 'http://schalk.net:3000' },  style: {color: '#EECCFF'}},'Javascript Monads Part 1 '), 
       h('span', ' and a code repo at '),
-      h('a', {props: {href: 'https://github.com/dschalk/fun-with-monads'}, style: {color: '#EECCFF'}}, ' github repo' ),
-      h('span', 'The original site, which was largely exploratory, is at: '  ),
-      h('a', {props: {href: 'http://transcendent.ninja' },  style: {color: '#EECCFF'}},' http://transcendent.ninja'), 
-      h('span', ' and a code repo at '),
-      h('a', {props: {href: 'https://github.com/dschalk/javascript-monads'}, style: {color: '#EECCFF'}}, ' repo' ),
-      h('span', '. The older site functions well, but it was bloated and unwieldy with React. I say "bloated" because I didn\'t need most of its core features. I didn\'t even use the state object and frequently called React.forceUpdate. Now I am at peace, using the '  ),
-      h('a', {props: {href: 'https://github.com/paldepind/snabbdom' },  style: {color: '#EECCFF'}},' snabbdom library. '), 
-      h('span', ' and a code repo at '),
-      h('p', ),
+      h('a', {props: {href: 'https://github.com/dschalk/javascript-monads-part1'}, style: {color: '#EECCFF'}}, ' github repo' ),
       h('h2', {style: {textAlign: 'center', color: '#ffba66'}}, 'MonadIter' ),
-      h('p', 'The basic monad is shown and demonstrated elsewhere. It is also in a script named "monad.js" in the "index.html" file, so you can experiment with the monads in the browser consol. Here is the other constructor in this project: '  ),
-      cow.monadIter,
-      h('p', 'As a refresher, Click the next button to execute the indicated code, then click the mMI2.release() button "NEXT" four times.'  ),
+      h('p', 'The monad constructors along with the instances and functions used in this demonstration are in a script included with the index.html page. Press F12, enter the name of a function, and it will be displayed. You can experiment with the monads and functions, and create new functions in the console. The Chrome console is my favorite place to test code. Here is how the monads are defined: '  ),
+      cow.monad,
+      h('p', 'To see MonadIter in action, click the next button to execute the indicated code, then click the mMI2.release() button four times.'  ),
       h('button', {on: { mouseenter: update4e, mouseleave: update4l, click: updateSteps }, style: style4},
             [ cow.steps ],  ),
       h('br', ),    
       h('br', ),    
-      h('button', {on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6}, 'NEXT'  ),  
+      h('button', {on: { mouseenter: update6e, mouseleave: update6l, click: updateNext }, style: style6}, `mMI2.release()`  ),  
       h('p', 'Now, a demonstration of monads handling websockets messages. In order to create a unique socket, please enter some name.'  ),
       h('input', {style: inputStyle1, on: {keydown: updateLogin},  } ),
       h('button', {on: { mouseenter: update8e, mouseleave: update8l, click: updateNums }, props: {value: 0, id: '0'}, style: style8},
@@ -262,8 +254,35 @@ function updateR(event) {
   oldVnode = patch(oldVnode, newVnode());
 }
 
+
+function updateR(event) {
+  mM1.ret([]);
+  mM2.ret(0);
+  mM3.ret(0);
+  mM4.ret(0);
+  mM5.ret(0);
+  mM6.ret(0);
+  mM7.ret(0);
+  mM8.ret(0);
+  mM9.ret(0);
+  mM10.ret(0);
+  mM11.ret(0);
+  mM12.ret(0);
+  mM13.ret(0);
+  mM14.ret('Score: ' + mM13.x);
+  mM15.ret(0);
+  mM16.ret(0);
+  mM17.ret(0);
+  mM18.ret(0);
+  mM19.ret(0);
+  mMI1.ret(0);
+  mMI2.ret(0);
+  oldVnode = patch(oldVnode, newVnode());
+}
+
 function updateSteps(event) {
-    mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret).bnd(mM4.ret)
+    mM1.ret(0).bnd(x => mM2.ret(x.x).bnd(() => mM3.ret(0)
+     .bnd(x => mM4.ret(x.x)
      .bnd(() => mM1.ret('Click the mMI2.release() button to proceed')
      .bnd(() => mMI2.block()
      .bnd(() => mM2.ret('Click it again.')
@@ -272,9 +291,9 @@ function updateSteps(event) {
      .bnd(() => mMI2.block()
      .bnd(() => mM4.ret('One more')
      .bnd(() => mMI2.block()
-     .bnd(() => mM1.ret(0).bnd(mM2.ret).bnd(mM3.ret)
-     .bnd(mM4.ret)
-      ))))))))) 
+     .bnd(() => mM1.ret(0).bnd(x => mM2.ret(x.x).bnd(() => mM3.ret(0)
+     .bnd(() => mM4.ret(0))
+      ))))))))))))));
   oldVnode = patch(oldVnode, newVnode());
 }
 
