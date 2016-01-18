@@ -137,8 +137,23 @@ var bnd = function bnd(f, mon) {
     args[_key5 - 2] = arguments[_key5];
   }
 
-  return f.apply(undefined, [mon.x, mon].concat(args));
+  return f.apply(undefined, [mon].concat(args));
 };
+
+var ret = function ret(v) {
+  var mon = new Monad(v);
+  return mon;
+}
+
+var Mcube = function(v) {
+  var mon = new Monad(v*v*v);
+  return mon;
+}
+
+var Madd = function(a,b) {
+  var mon = new Monad(a+b);
+  return mon;
+}
 
 var fmap = function fmap(f, mon) {
   for (var _len6 = arguments.length, args = Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
@@ -269,32 +284,32 @@ var next = function next(mon,bool,mon2) {
 }
 
 var doub = function doub(mon) {
-  mon.ret(x + x);
+  mon.ret(mon.x + mon.x);
   return mon;
 };
 
 var square = function square(mon) {
-  mon.ret(x * x);
+  mon.ret(mon.x * mon.x);
   return mon;
 };
 
 var tripple = function tripple(mon) {
-  mon.ret(x + x + x);
+  mon.ret(mon.x + mon.x + mon.x);
   return mon;
 };
 
 var cube =  function cube(mon) {
-  mon.ret(x * x * x);
+  mon.ret(mon.x * mon.x * mon.x);
   return mon;
 };
 
 var add = function add(mon, y) {
-  mon.ret(x + y);
+  mon.ret(mon.x + y);
   return mon;
 };
 
 var mult = function mult(mon, y) {
-  mon.ret(x * y);
+  mon.ret(mon.x * y);
   return mon;
 };
 
